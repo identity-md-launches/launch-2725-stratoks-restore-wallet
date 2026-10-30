@@ -6,6 +6,19 @@ The review **opens a real isolated browser demo**. It upgrades a copy of the exi
 
 The eight-finding resolution table, actual test results, raw evidence, screenshots, phone recording and six-domain review are in [current validation](artifacts/agency-interface/VALIDATION.md). [Integration](docs/agency/INTEGRATION.md) explains terrain geometry, animation gates and the compact runtime art. No production access or deployment occurred.
 
+The current HUD now offers **Connect wallet**, explicit message sign-in and server-confirmed sign-out through the Expanse visitor API. Connection alone never authenticates you. Accounts are optional, private visitor records; they give no simulation controls, resident recognition or social memories. The [visitor HUD validation](artifacts/visitor-auth/VALIDATION.md) contains current auth results, screenshots and remaining verification limits. [API v1](docs/auth/API-v1.md) and [owner setup/rollback](docs/auth/SETUP.md) describe the real backend and exact origin configuration.
+
+For an isolated local demonstration of the **actual built HUD** plus real server verification:
+
+```sh
+# Build first with the existing commands below, then from the repository root:
+node deploy/auth-demo/hud.mjs
+```
+
+Open `http://127.0.0.1:8791/preview/` in an injected EVM wallet browser. This server creates and deletes its own disposable world; it never mounts production data. Choose a wallet, connect, then explicitly sign the free message. No gas, approvals, transactions or funds are involved. Only simulated providers have been tested; actual MetaMask/Rabby extensions and mobile devices remain untested. The verifier accepts EOA signatures, not smart contract accounts. Static hosting alone installs no backend and cannot authenticate visitors.
+
+Current visitor integration checks: **233 backend tests, 51 client tests (34 existing + 17 Expanse), 19 actual-HUD browser checks and the 16/16 design probe passed**, as did production build and typecheck. The static preview can connect a wallet without creating an account or requesting a signature. The HUD gives 60 seconds to read/sign, independently of its 10-second backend/connection deadlines. Docker/ARM startup could not be checked (`docker: Permission denied`); WebKit and real extensions/devices remain unverified. Raw results and screenshots are in [visitor validation](artifacts/visitor-auth/VALIDATION.md).
+
 ## Install, preview and rebuild
 
 Use Node 22.12+ (this task used Node 24.21.0). The existing frontend manifest, lockfile and Vite configuration are preserved.
@@ -39,17 +52,17 @@ Drag or use arrow keys to pan. Scroll, pinch, use +/−, or use the zoom control
 
 Click empty terrain, or focus the map and press Enter, to inspect its actual coordinates, resources, construction progress, shelter integrity and observer-visible stores. Tile evidence is a safe-area-aware native dialog; Close or Escape returns focus to the map. **Explore settlements** lists real structures by biome; choosing one moves your camera. The atlas supports pointer and arrow navigation, and closes after choosing a location. Observer travel never moves residents. Water crossings remain subject to the engine's original movement rules.
 
-Goals shows persistent needs/curiosity/social priorities, suspension/resumption and learned strategies. Signals shows limited learned local signaling, perceived/sent history, response evidence, co-occurrence, confidence and individual trust. Resident store memory is explicitly stale until revisited. Plans retains predictions, uncertainty, candidates and measured outcomes. Perception is the resident's last decision observation, not current global truth. Learning retains its actual model/episode/mb-v1 evidence. JSON downloads contain the actual inspector. World records expose bounded discovery/social history and real population, births, deaths, stores, sites and fish totals. No speech, thoughts, invented events, wallet/payment UI or fake IMD control is added. The archived `#settlement` route stays unavailable with `legacyAvailable:false`.
+Goals shows persistent needs/curiosity/social priorities, suspension/resumption and learned strategies. Signals shows limited learned local signaling, perceived/sent history, response evidence, co-occurrence, confidence and individual trust. Resident store memory is explicitly stale until revisited. Plans retains predictions, uncertainty, candidates and measured outcomes. Perception is the resident's last decision observation, not current global truth. Learning retains its actual model/episode/mb-v1 evidence. JSON downloads contain the actual inspector. World records expose bounded discovery/social history and real population, births, deaths, stores, sites and fish totals. No speech, thoughts, invented events, payment UI or fake IMD control is added. Visitor account data never enters public frames or inspector downloads. The archived `#settlement` route stays unavailable with `legacyAvailable:false`.
 
 ## Mode and owner installation
 
 The shipped runtime file, `web/public/expanse-config.json` (copied to `dist/`), is:
 
 ```json
-{"httpUrl":"https://stratoks.2-29-11-211.sslip.io","legacyAvailable":false,"startMode":"demo"}
+{"httpUrl":"https://stratoks.2-29-11-211.sslip.io","legacyAvailable":false,"startMode":"live"}
 ```
 
-For an owner same-origin installation, serve `dist/` with the existing read-only Expanse API and set `startMode` to `live` in that runtime file. Keep `legacyAvailable:false`. The source offers **Choose world** for an owner HTTPS endpoint, `?server=<URL-encoded HTTPS base>`, `?demo=1` and `?recorded=1`. An explicitly remembered source choice takes precedence. Local HTTP is accepted only from a local HTTP preview. A static export cannot change a different server's CORS policy. Failed connections retain a labeled recorded capture or last confirmed frame and provide reconnect.
+The existing configuration is preserved. On the owner's matching origin, `startMode:live` still selects that live service. On another static preview origin it opens the isolated browser demo; it never silently contacts production. For an owner same-origin installation, serve `dist/` beside the existing Expanse API (world reads remain read-only) and retain that runtime file, or use an empty `httpUrl` to select the page origin. Keep `legacyAvailable:false`. The source offers **Choose world** for an owner HTTPS endpoint, `?server=<URL-encoded HTTPS base>`, `?demo=1` and `?recorded=1`. An explicitly remembered source choice takes precedence. Local HTTP is accepted only from a local HTTP preview. A static export cannot change a different server's CORS policy. Failed connections retain a labeled recorded capture or last confirmed frame and provide reconnect. Sign-in additionally needs the configured backend's `/api/auth/config` capability and exact API v1 scope checks; it never uses the legacy developer-role transport.
 
 The owner-run backend has zero runtime dependencies:
 

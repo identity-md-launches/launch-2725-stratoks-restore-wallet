@@ -37,3 +37,7 @@ artifacts/*
 # Source/runtime additions plus this evidence remain inside the task's 8 MiB bundle.
 !artifacts/agency-interface/
 !artifacts/agency-interface/**
+
+# Visitor HUD validation/screenshots: explicit combined path budget 1048576 bytes.
+!artifacts/visitor-auth/
+!artifacts/visitor-auth/**

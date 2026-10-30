@@ -1,0 +1,218 @@
+
+> stratoks-client@0.1.0 test
+> tsx --test src/*.test.ts
+
+TAP version 13
+# Subtest: isometric basis points preserve existing coordinates, including negative chunk boundaries
+ok 1 - isometric basis points preserve existing coordinates, including negative chunk boundaries
+  ---
+  duration_ms: 4.885092
+  type: 'test'
+  ...
+# Subtest: all visible in-world screen samples are covered by the bounded API query at every zoom and aspect
+ok 2 - all visible in-world screen samples are covered by the bounded API query at every zoom and aspect
+  ---
+  duration_ms: 2.370211
+  type: 'test'
+  ...
+# Subtest: zoom keeps the pointer world coordinate stable, while minimap uses the same world bounds
+ok 3 - zoom keeps the pointer world coordinate stable, while minimap uses the same world bounds
+  ---
+  duration_ms: 0.767911
+  type: 'test'
+  ...
+# Subtest: defect 2: every corner tile can be centred at all supported zooms and aspects
+ok 4 - defect 2: every corner tile can be centred at all supported zooms and aspects
+  ---
+  duration_ms: 0.594457
+  type: 'test'
+  ...
+# Subtest: primitive intentions cannot make a false work/rest/fishing pose
+ok 5 - primitive intentions cannot make a false work/rest/fishing pose
+  ---
+  duration_ms: 0.314834
+  type: 'test'
+  ...
+# Subtest: fishing casts only with actual phase and obtainable line; no catch frame is invented
+ok 6 - fishing casts only with actual phase and obtainable line; no catch frame is invented
+  ---
+  duration_ms: 0.419874
+  type: 'test'
+  ...
+# Subtest: loads and construction follow confirmed inventory/materials instead of destination plans
+ok 7 - loads and construction follow confirmed inventory/materials instead of destination plans
+  ---
+  duration_ms: 0.354859
+  type: 'test'
+  ...
+# Subtest: defect 4: repair phase requires work tool and repair material, never food alone
+ok 8 - defect 4: repair phase requires work tool and repair material, never food alone
+  ---
+  duration_ms: 0.220589
+  type: 'test'
+  ...
+# Subtest: new activity art needs actual work, local object, input and heat/water
+ok 9 - new activity art needs actual work, local object, input and heat/water
+  ---
+  duration_ms: 0.630892
+  type: 'test'
+  ...
+# Subtest: configuration permits HTTPS subpaths and refuses credentials or mixed content
+ok 10 - configuration permits HTTPS subpaths and refuses credentials or mixed content
+  ---
+  duration_ms: 0.746916
+  type: 'test'
+  ...
+# Subtest: wire query preserves negative world coordinates and selected creature
+ok 11 - wire query preserves negative world coordinates and selected creature
+  ---
+  duration_ms: 0.223761
+  type: 'test'
+  ...
+# Subtest: incompatible and incoherent frames are not presented as shared state
+ok 12 - incompatible and incoherent frames are not presented as shared state
+  ---
+  duration_ms: 0.245947
+  type: 'test'
+  ...
+# Subtest: bounded viewport cache reuses unchanged ticks and invalidates camera, terrain and world identity
+ok 13 - bounded viewport cache reuses unchanged ticks and invalidates camera, terrain and world identity
+  ---
+  duration_ms: 18.754432
+  type: 'test'
+  ...
+# Subtest: worn paint uses reported shelters and adjacent travel without crossing blocked land or water
+ok 14 - worn paint uses reported shelters and adjacent travel without crossing blocked land or water
+  ---
+  duration_ms: 0.766661
+  type: 'test'
+  ...
+# Subtest: defect 3: connected cliffs expose only drops; water banks and snow use real terrain kinds
+ok 15 - defect 3: connected cliffs expose only drops; water banks and snow use real terrain kinds
+  ---
+  duration_ms: 0.591682
+  type: 'test'
+  ...
+# Subtest: terrain picking and query cover all four corners, negative chunks, raised ground, zoom and aspect
+ok 16 - terrain picking and query cover all four corners, negative chunks, raised ground, zoom and aspect
+  ---
+  duration_ms: 80.652574
+  type: 'test'
+  ...
+# Subtest: off-world and unknown terrain cannot be picked or invented by relief
+ok 17 - off-world and unknown terrain cannot be picked or invented by relief
+  ---
+  duration_ms: 0.166124
+  type: 'test'
+  ...
+# Subtest: three real policies acquire, reverse and lose preference with output ablation across ten seeds
+ok 18 - three real policies acquire, reverse and lose preference with output ablation across ten seeds
+  ---
+  duration_ms: 4804.211857
+  type: 'test'
+  ...
+# Subtest: lab reproducibility, validation and bounded retained evidence
+ok 19 - lab reproducibility, validation and bounded retained evidence
+  ---
+  duration_ms: 618.112607
+  type: 'test'
+  ...
+# Subtest: uncertain interventions stay owned by the actor, world and service across reloads
+ok 20 - uncertain interventions stay owned by the actor, world and service across reloads
+  ---
+  duration_ms: 1.549149
+  type: 'test'
+  ...
+# Subtest: legacy payloads remain readable but cannot be mistaken for actor-owned storage
+ok 21 - legacy payloads remain readable but cannot be mistaken for actor-owned storage
+  ---
+  duration_ms: 0.235433
+  type: 'test'
+  ...
+# Subtest: invalid stored requests cannot be retried
+ok 22 - invalid stored requests cannot be retried
+  ---
+  duration_ms: 0.228796
+  type: 'test'
+  ...
+# Subtest: 429 and durability/busy errors expose actionable honest server guidance
+ok 23 - 429 and durability/busy errors expose actionable honest server guidance
+  ---
+  duration_ms: 30.438377
+  type: 'test'
+  ...
+# Subtest: event cursor is bounded and pagination uses the server cursor unchanged
+ok 24 - event cursor is bounded and pagination uses the server cursor unchanged
+  ---
+  duration_ms: 1.146172
+  type: 'test'
+  ...
+# Subtest: responses from a stopped connection cannot update a new world
+ok 25 - responses from a stopped connection cannot update a new world
+  ---
+  duration_ms: 3.347649
+  type: 'test'
+  ...
+# Subtest: actual simulation snapshot is rendered as an entity map with its real population
+ok 26 - actual simulation snapshot is rendered as an entity map with its real population
+  ---
+  duration_ms: 89.777406
+  type: 'test'
+  ...
+# Subtest: delta updates one creature, removes consumed resources, and deduplicates replayed events
+ok 27 - delta updates one creature, removes consumed resources, and deduplicates replayed events
+  ---
+  duration_ms: 46.132572
+  type: 'test'
+  ...
+# Subtest: a sequence gap freezes existing state and asks for a full snapshot
+ok 28 - a sequence gap freezes existing state and asks for a full snapshot
+  ---
+  duration_ms: 22.869877
+  type: 'test'
+  ...
+# Subtest: reconnect snapshot replaces entities without duplicating past events
+ok 29 - reconnect snapshot replaces entities without duplicating past events
+  ---
+  duration_ms: 14.045623
+  type: 'test'
+  ...
+# Subtest: developer reset replaces world, history, events and sequence rather than merging old identities
+ok 30 - developer reset replaces world, history, events and sequence rather than merging old identities
+  ---
+  duration_ms: 28.259452
+  type: 'test'
+  ...
+# Subtest: a snapshot from an earlier restored backup discards events from the abandoned timeline
+ok 31 - a snapshot from an earlier restored backup discards events from the abandoned timeline
+  ---
+  duration_ms: 22.397236
+  type: 'test'
+  ...
+# Subtest: malformed snapshot is refused without changing the current world
+ok 32 - malformed snapshot is refused without changing the current world
+  ---
+  duration_ms: 24.041639
+  type: 'test'
+  ...
+# Subtest: same-tick snapshot recovery discards uncommitted events as well as lower-tick recovery
+ok 33 - same-tick snapshot recovery discards uncommitted events as well as lower-tick recovery
+  ---
+  duration_ms: 12.850599
+  type: 'test'
+  ...
+# Subtest: restart epoch clears abandoned events even when the new sequence has already caught up
+ok 34 - restart epoch clears abandoned events even when the new sequence has already caught up
+  ---
+  duration_ms: 12.036507
+  type: 'test'
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 34
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5726.541215

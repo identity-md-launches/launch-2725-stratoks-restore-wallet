@@ -78,3 +78,17 @@ Errors are JSON `{version:1,error:<code>}`. Representative statuses:
 GC may remove an expired nonce first, yielding `unknown_or_used_nonce` instead of `nonce_expired`; both require a new challenge. Unknown internal errors return generic `auth_unavailable`, without paths, stack traces or credentials. A profile filesystem failure returns 503 and issues no token.
 
 OPTIONS is allowed only on the five known auth routes with an allowed origin, the specific route method, and only `Authorization`, `Content-Type`, `X-Stratoks-Origin` requested headers. Returns 204. No `Access-Control-Allow-Credentials`; no wildcard allowlist. World OPTIONS and every non-GET/HEAD world method still return 405.
+
+## Current HUD client contract
+
+The wire contract remains v1. `web/src/expanse/VisitorWallet.tsx` uses `VisitorAuthClient` from `shared/visitor-auth-client.js`; its TypeScript API is declared in `shared/visitor-auth-client.d.ts`. It uses only `eth_requestAccounts`, `eth_accounts`, `eth_chainId` and `personal_sign`. The selected backend's base plus `/` is the expected canonical URI, even behind a prefixed reverse proxy. The HUD requires a compatible config before enabling sign-in and accepts nonce lifetimes up to 120 seconds. It never derives identity from the saved world URL or a supplied address.
+
+In an isolated static preview, `baseUrl` and `uri` are explicitly null. The controller can connect/disconnect an injected provider, but every auth request fails locally before fetch and no sign-in action is rendered. There is no default hosting-origin auth endpoint or fabricated session.
+
+The HUD configures a separate 60-second wallet-signature reading deadline; backend/connection operations remain bounded at 10 seconds. Other controller integrations can set `signatureTimeoutMs` explicitly; if omitted it follows `timeoutMs`. The server nonce expiry remains authoritative.
+
+The controller validates exact challenge bytes and scope before prompting and re-reads wallet account/network before signing, before submitting verification and after the verification reply. Every invalidation increments a generation; delayed responses cannot publish authentication into a later attempt or world. A late nonce/session is cancelled with the existing v1 logout-by-nonce operation. A changed capability world scope invalidates the previous session; current-session responses must match the existing session's scope and expiry. Verified UI also checks session status every 30 seconds and on focus/online/visibility/dialog open, so restart detection has a bounded observation delay. Initial EIP-1193 account/chain announcements during a connection are supported without treating them as authentication.
+
+`onChange` exposes a private session (including token) to an integrator; the actual HUD removes the token before putting any session display data into React state. Do not export controller snapshots. Failed revocations remain queued in page memory, including retired world controllers with in-flight operations, and explicit logout displays success only for a server-confirmed result. Offline tab-close revocation is limited as described above. No session restores from browser storage.
+
+With no local credential/pending revocation, client `logout()` reports **No active visitor session in this tab**, rather than claiming to have received a server acknowledgment. Only successful pending revocation requests produce **Signed out on the server**.

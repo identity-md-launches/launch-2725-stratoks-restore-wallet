@@ -25,30 +25,39 @@ export function validateChallenge(c, cfg, { address, chainId, origin, uri, now =
 }
 
 export class VisitorAuthClient {
-  constructor({ baseUrl, uri, origin, fetchImpl = fetch, timeoutMs = 10_000, onChange = () => {} }) {
-    this.baseUrl = baseUrl.replace(/\/$/, ''); this.uri = uri; this.origin = origin;
+  constructor({ baseUrl, uri, origin, fetchImpl = fetch, timeoutMs = 10_000, signatureTimeoutMs, onChange = () => {} }) {
+    this.baseUrl = baseUrl ? baseUrl.replace(/\/$/, '') : null; this.uri = uri; this.origin = origin;
     this.fetch = (...args) => fetchImpl(...args); this.timeoutMs = timeoutMs; this.onChange = onChange;
+    this.signatureTimeoutMs = signatureTimeoutMs;
     this.generation = 0; this.state = 'disconnected'; this.error = ''; this.provider = null;
     this.address = null; this.chainId = null; this.session = null; this.config = null; this.pendingNonce = null;
     this.busy = false; this.cleanup = () => {}; this.expiryTimer = null; this.revocations = new Set();
+    this.challenge = null;
+    this.pendingRequests = 0; this.activeAttempts = 0;
   }
   emit(state = this.state, error = '') { this.state = state; this.error = error; this.onChange({ state, error, address: this.address, chainId: this.chainId, session: this.session, busy: this.busy }); }
-  async deadline(promise) {
+  async deadline(promise, timeoutMs = this.timeoutMs) {
     let timer;
-    try { return await Promise.race([promise, new Promise((_, reject) => { timer = setTimeout(() => reject(new Error('Request timed out. You can retry.')), this.timeoutMs); })]); }
+    try { return await Promise.race([promise, new Promise((_, reject) => { timer = setTimeout(() => reject(new Error('Request timed out. You can retry.')), timeoutMs); })]); }
     finally { clearTimeout(timer); }
   }
   async request(route, body, token) {
+    if (!this.baseUrl) throw new Error('This isolated preview has no authentication backend. Choose a world server to sign in.');
+    this.pendingRequests++;
     const controller = new AbortController(); const timer = setTimeout(() => controller.abort(), this.timeoutMs);
     try {
       const r = await this.fetch(`${this.baseUrl}/api/auth/${route}`, { method: body === undefined ? 'GET' : 'POST',
         credentials: 'omit', cache: 'no-store', redirect: 'error', signal: controller.signal,
         headers: { 'X-Stratoks-Origin': this.origin, ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}), ...(token ? { Authorization: `Bearer ${token}` } : {}) }, body: body === undefined ? undefined : JSON.stringify(body) });
       const data = await r.json();
-      if (!r.ok) throw new Error(data.error ?? `Backend returned ${r.status}`);
+      if (!r.ok) {
+        const e = new Error(data.error ?? `Backend returned ${r.status}`);
+        e.status = r.status;
+        throw e;
+      }
       return data;
     } catch (e) { if (e.name === 'AbortError') throw new Error('Backend timed out. You can retry.'); throw e; }
-    finally { clearTimeout(timer); }
+    finally { clearTimeout(timer); this.pendingRequests--; }
   }
   revoke(body, token) {
     // Track failures so UI never falsely claims server logout while offline.
@@ -62,43 +71,59 @@ export class VisitorAuthClient {
     ++this.generation; this.busy = false;
     clearTimeout(this.expiryTimer);
     const old = this.session, nonce = this.pendingNonce;
-    this.session = null; this.pendingNonce = null;
-    if (old || nonce) this.revoke(nonce ? { nonce } : {}, old?.token).catch(() => this.emit(this.state, 'Authentication cleared locally. Server revocation pending; reconnect and retry logout. Sessions also expire or end on server restart.'));
+    this.session = null; this.pendingNonce = null; this.challenge = null;
+    const generation = this.generation;
+    if (old || nonce) this.revoke(nonce ? { nonce } : {}, old?.token).catch(() => {
+      if (generation === this.generation) this.emit(this.state, 'Authentication cleared locally. Server revocation pending; reconnect and retry logout. Sessions also expire or end on server restart.');
+    });
     this.emit(state, reason);
   }
   async loadConfig() {
     const generation = this.generation;
     try {
       const c = await this.request('config');
-      if (!c.enabled || c.version !== 1 || c.uri !== this.uri || c.domain !== new URL(this.uri).host || typeof c.world !== 'string' || !Array.isArray(c.chains) || !Number.isSafeInteger(c.nonceTtlMs) || c.nonceTtlMs < 1 || c.transport !== 'memory-bearer') throw new Error('This backend does not offer compatible visitor sign-in.');
-      if (generation === this.generation) { this.config = c; this.emit(); } return c;
-    } catch (e) { if (generation === this.generation) { this.config = null; this.emit('unavailable', e.message); } throw e; }
+      if (c.enabled !== true || c.version !== 1 || c.uri !== this.uri || c.domain !== new URL(this.uri).host || typeof c.world !== 'string' || c.world.length > 256 || !c.world || !Array.isArray(c.chains) || !c.chains.length || c.chains.length > 16 || c.chains.some((n) => !Number.isSafeInteger(n) || n <= 0) || !Number.isSafeInteger(c.nonceTtlMs) || c.nonceTtlMs < 1 || c.nonceTtlMs > 120_000 || !Number.isSafeInteger(c.sessionTtlMs) || c.sessionTtlMs < 1 || c.sessionTtlMs > 100_000_000 || c.sessionsSurviveRestart !== false || c.transport !== 'memory-bearer') throw new Error('This backend does not offer compatible visitor sign-in.');
+      if (generation === this.generation) {
+        if (this.config && this.config.world !== c.world) this.invalidate('The world service changed. Sign in again.');
+        this.config = c;
+        const recovering = this.state === 'unavailable';
+        this.emit(recovering ? (this.address ? 'connected' : 'disconnected') : this.state, recovering ? '' : this.error);
+      } return c;
+    } catch (e) {
+      if (generation === this.generation) {
+        this.config = null;
+        this.invalidate(e.message, 'unavailable');
+      } throw e;
+    }
   }
   async connect(provider) {
     if (this.busy) return;
     this.invalidate(); this.cleanup(); this.provider = provider; this.address = null; this.chainId = null;
     if (!provider?.request) { this.emit('unavailable', 'Use an injected EVM wallet extension or its mobile browser.'); return; }
-    const changedAccounts = (a) => { this.address = addressOf(a); this.invalidate('Wallet account changed. Sign in again.'); };
-    const changedChain = (c) => { this.chainId = chainOf(c); this.invalidate('Network changed. Sign in again on a supported network.'); };
+    // Many wallets announce the initial account while eth_requestAccounts is still resolving.
+    // There is no session at this point; re-read the selected account before completing connection.
+    let connecting = true;
+    const changedAccounts = (a) => { this.address = addressOf(a); if (!connecting) this.invalidate('Wallet account changed. Sign in again.'); };
+    const changedChain = (c) => { this.chainId = chainOf(c); if (!connecting) this.invalidate('Network changed. Sign in again on a supported network.'); };
     const disconnected = () => { this.address = null; this.invalidate('Wallet disconnected. Unlock or reconnect your wallet.', 'disconnected'); };
     for (const [name, fn] of [['accountsChanged', changedAccounts], ['chainChanged', changedChain], ['disconnect', disconnected]]) provider.on?.(name, fn);
     this.cleanup = () => { for (const [name, fn] of [['accountsChanged', changedAccounts], ['chainChanged', changedChain], ['disconnect', disconnected]]) provider.removeListener?.(name, fn); };
-    const generation = this.generation; this.busy = true; this.emit();
+    const generation = this.generation; this.busy = true; this.activeAttempts++; this.emit();
     try {
-      const accounts = await this.deadline(Promise.resolve().then(() => provider.request({ method: 'eth_requestAccounts' })));
-      const chain = await this.deadline(Promise.resolve().then(() => provider.request({ method: 'eth_chainId' })));
+      await this.deadline(Promise.resolve().then(() => provider.request({ method: 'eth_requestAccounts' })));
+      const [accounts, chain] = await this.deadline(Promise.all([provider.request({ method: 'eth_accounts' }), provider.request({ method: 'eth_chainId' })]));
       if (generation !== this.generation) return;
       this.address = addressOf(accounts); this.chainId = chainOf(chain);
       if (!this.address || !this.chainId) throw new Error('Wallet is locked or has no available account. Unlock it and retry.');
       this.emit('connected');
     } catch (e) { if (generation === this.generation) this.emit('disconnected', e.code === 4001 ? 'Connection declined. You can retry.' : e.message); }
-    finally { if (generation === this.generation) { this.busy = false; this.emit(this.state, this.error); } }
+    finally { this.activeAttempts--; connecting = false; if (generation === this.generation) { this.busy = false; this.emit(this.state, this.error); } }
   }
   async signIn() {
     if (this.busy || this.session || !this.address || !this.provider) return;
     const generation = this.generation, address = this.address, chainId = this.chainId, provider = this.provider;
     const current = () => generation === this.generation;
-    this.busy = true; this.emit('signing');
+    this.busy = true; this.activeAttempts++; this.emit('signing');
     let nonce;
     try {
       await this.retryRevocations();
@@ -109,35 +134,49 @@ export class VisitorAuthClient {
       if (!current()) { await this.revoke({ nonce }); return; }
       this.pendingNonce = nonce;
       validateChallenge(c, config, { address, chainId, origin: this.origin, uri: this.uri });
+      this.challenge = c; this.emit('signing');
       // Recheck provider state before opening the signature prompt, and again before verify.
       const checkWallet = async () => {
         const [a, ch] = await this.deadline(Promise.all([provider.request({ method: 'eth_accounts' }), provider.request({ method: 'eth_chainId' })]));
         if (!current() || addressOf(a) !== address || chainOf(ch) !== chainId) throw new Error('Wallet account or network changed. Sign in again.');
       };
       await checkWallet();
-      const signature = await this.deadline(Promise.resolve().then(() => provider.request({ method: 'personal_sign', params: ['0x' + [...new TextEncoder().encode(c.message)].map((v) => v.toString(16).padStart(2, '0')).join(''), address] })));
+      const signature = await this.deadline(Promise.resolve().then(() => provider.request({ method: 'personal_sign', params: ['0x' + [...new TextEncoder().encode(c.message)].map((v) => v.toString(16).padStart(2, '0')).join(''), address] })), this.signatureTimeoutMs ?? this.timeoutMs);
       await checkWallet();
       const result = await this.request('verify', { nonce, address, chainId, message: c.message, signature });
       if (!current()) { await this.revoke({ nonce }, result.token); return; }
-      if (result.address !== address || result.chainId !== chainId || result.world !== config.world || result.origin !== this.origin || result.uri !== this.uri || !/^[0-9a-f]{64}$/.test(result.token) || result.expiresAt <= Date.now() || result.role !== 'visitor') throw new Error('Mismatched session response.');
-      this.session = result; this.pendingNonce = null;
+      // Verification itself can be delayed. Recheck silent wallet changes after its response too.
+      await checkWallet();
+      if (result.version !== 1 || result.address !== address || result.chainId !== chainId || result.world !== config.world || result.origin !== this.origin || result.uri !== this.uri || !/^[0-9a-f]{64}$/.test(result.token) || !Number.isSafeInteger(result.expiresAt) || result.expiresAt <= Date.now() || result.expiresAt > Date.now() + config.sessionTtlMs + 30_000 || result.role !== 'visitor' || result.profile?.address !== address || !Number.isSafeInteger(result.profile.visitCount) || result.profile.visitCount < 1 || !Number.isSafeInteger(result.profile.firstVerifiedAt) || !Number.isSafeInteger(result.profile.lastVerifiedAt) || result.profile.firstVerifiedAt < 0 || result.profile.lastVerifiedAt < result.profile.firstVerifiedAt) throw new Error('Mismatched session response.');
+      this.session = result; this.pendingNonce = null; this.challenge = null;
       this.expiryTimer = setTimeout(() => this.invalidate('Session expired. Sign in again.', 'expired'), Math.max(0, result.expiresAt - Date.now()));
       this.emit('verified');
     } catch (e) {
       if (nonce) await this.revoke({ nonce }).catch(() => {});
-      if (current()) { this.pendingNonce = null; this.session = null; this.emit(this.config ? 'connected' : 'unavailable', e.code === 4001 ? 'Signature declined. You can retry.' : e.message); }
-    } finally { if (current()) { this.busy = false; this.emit(this.state, this.error); } }
+      if (current()) { this.pendingNonce = null; this.session = null; this.challenge = null; this.emit(this.config ? 'connected' : 'unavailable', e.code === 4001 ? 'Signature declined. You can retry.' : e.message); }
+    } finally { this.activeAttempts--; if (current()) { this.busy = false; this.emit(this.state, this.error); } }
   }
   async refreshSession() {
     if (!this.session) return;
     const generation = this.generation;
-    try { await this.request('session', undefined, this.session.token); }
+    const previous = this.session;
+    try {
+      const s = await this.request('session', undefined, previous.token);
+      for (const k of ['version', 'address', 'chainId', 'origin', 'world', 'uri', 'role', 'expiresAt']) if (s[k] !== previous[k]) throw new Error('Mismatched session response');
+    }
     catch (e) { if (generation === this.generation) this.invalidate(`Verification ended or backend unavailable: ${e.message}. Sessions end on server restart.`, 'expired'); }
   }
   async logout() {
     this.invalidate();
-    try { await this.retryRevocations(); this.emit(this.address ? 'connected' : 'disconnected', 'Signed out on the server.'); }
-    catch { this.emit(this.state, 'Cleared locally; server logout is pending while offline. Retry logout when the backend returns.'); }
+    if (!this.revocations.size) {
+      this.emit(this.address ? 'connected' : 'disconnected', 'No active visitor session in this tab.');
+      return;
+    }
+    const generation = this.generation;
+    this.busy = true; this.emit(this.state, 'Confirming sign-out with the server…');
+    try { await this.retryRevocations(); if (generation === this.generation) this.emit(this.address ? 'connected' : 'disconnected', 'Signed out on the server.'); }
+    catch { if (generation === this.generation) this.emit(this.state, 'Cleared locally; server logout is pending while offline. Retry logout when the backend returns.'); }
+    finally { if (generation === this.generation) { this.busy = false; this.emit(this.state, this.error); } }
   }
   disconnect() { this.cleanup(); this.address = null; this.provider = null; this.invalidate(); }
   destroy() { this.disconnect(); clearTimeout(this.expiryTimer); }

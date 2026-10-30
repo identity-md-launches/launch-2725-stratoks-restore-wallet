@@ -1,0 +1,172 @@
+TAP version 13
+# Subtest: client uses actual HTTP crypto verification and server logout; connecting alone never authenticates
+ok 1 - client uses actual HTTP crypto verification and server logout; connecting alone never authenticates
+  ---
+  duration_ms: 485.939921
+  type: 'test'
+  ...
+# Subtest: account switch mid-signature cannot authenticate old or new account; retry recovers
+ok 2 - account switch mid-signature cannot authenticate old or new account; retry recovers
+  ---
+  duration_ms: 314.481722
+  type: 'test'
+  ...
+# Subtest: network changes and provider disconnect immediately clear/revoke an existing session
+ok 3 - network changes and provider disconnect immediately clear/revoke an existing session
+  ---
+  duration_ms: 204.949494
+  type: 'test'
+  ...
+# Subtest: chain switch mid-signature and silent account changes both reject; no transaction RPC
+ok 4 - chain switch mid-signature and silent account changes both reject; no transaction RPC
+  ---
+  duration_ms: 115.102944
+  type: 'test'
+  ...
+# Subtest: late verification response after account switch is cancelled on server
+ok 5 - late verification response after account switch is cancelled on server
+  ---
+  duration_ms: 163.500419
+  type: 'test'
+  ...
+# Subtest: declined signature, locked wallet and provider timeout leave buttons recoverable
+ok 6 - declined signature, locked wallet and provider timeout leave buttons recoverable
+  ---
+  duration_ms: 227.938839
+  type: 'test'
+  ...
+# Subtest: signature reading timeout is independently bounded and cancelled without shortening backend requests
+ok 7 - signature reading timeout is independently bounded and cancelled without shortening backend requests
+  ---
+  duration_ms: 227.660171
+  type: 'test'
+  ...
+# Subtest: backend timeout/offline logout, unavailable capability and retry
+ok 8 - backend timeout/offline logout, unavailable capability and retry
+  ---
+  duration_ms: 355.201671
+  type: 'test'
+  ...
+# Subtest: exact challenge validation rejects altered server fields before prompting wallet
+ok 9 - exact challenge validation rejects altered server fields before prompting wallet
+  ---
+  duration_ms: 46.414587
+  type: 'test'
+  ...
+# Subtest: missing wallets, EIP-6963 discovery, multiple provider choice, fallback and cleanup
+ok 10 - missing wallets, EIP-6963 discovery, multiple provider choice, fallback and cleanup
+  ---
+  duration_ms: 61.185601
+  type: 'test'
+  ...
+# Subtest: late nonce after disconnect is cancelled; connection timeout/rejection can be retried
+ok 11 - late nonce after disconnect is cancelled; connection timeout/rejection can be retried
+  ---
+  duration_ms: 217.587765
+  type: 'test'
+  ...
+# Subtest: initial wallet announcements during connect are accepted without creating authentication
+ok 12 - initial wallet announcements during connect are accepted without creating authentication
+  ---
+  duration_ms: 198.735962
+  type: 'test'
+  ...
+# Subtest: isolated preview can connect a wallet but cannot request a challenge or fake authentication
+ok 13 - isolated preview can connect a wallet but cannot request a challenge or fake authentication
+  ---
+  duration_ms: 20.185181
+  type: 'test'
+  ...
+# Subtest: silent account switch while verify is in flight rejects and revokes its returned session
+ok 14 - silent account switch while verify is in flight rejects and revokes its returned session
+  ---
+  duration_ms: 160.01668
+  type: 'test'
+  ...
+# Subtest: capability world changes and malformed current-session replies end verification
+ok 15 - capability world changes and malformed current-session replies end verification
+  ---
+  duration_ms: 230.722765
+  type: 'test'
+  ...
+# Subtest: late logout acknowledgement cannot overwrite a newer verified account state
+ok 16 - late logout acknowledgement cannot overwrite a newer verified account state
+  ---
+  duration_ms: 214.485911
+  type: 'test'
+  ...
+# Subtest: expiry timer clears verification and revokes server credential without changing the world
+ok 17 - expiry timer clears verification and revokes server credential without changing the world
+  ---
+  duration_ms: 210.459849
+  type: 'test'
+  ...
+# Subtest: delivered static preview modules match the authoritative shared client bytes
+ok 18 - delivered static preview modules match the authoritative shared client bytes
+  ---
+  duration_ms: 0.382471
+  type: 'test'
+  ...
+# Subtest: real HTTP challenge/signature/login/session/logout; private profile survives restart, world unchanged
+ok 19 - real HTTP challenge/signature/login/session/logout; private profile survives restart, world unchanged
+  ---
+  duration_ms: 470.090108
+  type: 'test'
+  ...
+# Subtest: HTTP rejects wrong signer/address/chain/message/origin, replay and expiry
+ok 20 - HTTP rejects wrong signer/address/chain/message/origin, replay and expiry
+  ---
+  duration_ms: 642.271781
+  type: 'test'
+  ...
+# Subtest: cancel pending or completed challenge safely revokes late authentication
+ok 21 - cancel pending or completed challenge safely revokes late authentication
+  ---
+  duration_ms: 167.765862
+  type: 'test'
+  ...
+# Subtest: malformed input, bounded bodies, exact CORS and method isolation
+ok 22 - malformed input, bounded bodies, exact CORS and method isolation
+  ---
+  duration_ms: 54.24187
+  type: 'test'
+  ...
+# Subtest: bounded nonce/session/profile stores and expiry garbage collection
+ok 23 - bounded nonce/session/profile stores and expiry garbage collection
+  ---
+  duration_ms: 467.157424
+  type: 'test'
+  ...
+# Subtest: per-peer/global rates and bounded rate-key map reject without affecting world
+ok 24 - per-peer/global rates and bounded rate-key map reject without affecting world
+  ---
+  duration_ms: 29.016613
+  type: 'test'
+  ...
+# Subtest: body deadline returns 408; profile write failure and corrupt restart keep anonymous viewing alive
+ok 25 - body deadline returns 408; profile write failure and corrupt restart keep anonymous viewing alive
+  ---
+  duration_ms: 198.925273
+  type: 'test'
+  ...
+# Subtest: invalid configuration cannot enable authentication
+ok 26 - invalid configuration cannot enable authentication
+  ---
+  duration_ms: 0.777688
+  type: 'test'
+  ...
+# Subtest: auth on a copied schema-4 populated world preserves identity through migration and restart
+ok 27 - auth on a copied schema-4 populated world preserves identity through migration and restart
+  ---
+  duration_ms: 540.998161
+  type: 'test'
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 27
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3574.156505

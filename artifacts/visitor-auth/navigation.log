@@ -1,0 +1,95 @@
+{
+  "checks": [
+    "updated browser worker resumed tick 12601; no reset",
+    "all four biomes and islands navigated through the minimap",
+    "all four world corners reachable; keyboard picking and Escape work",
+    "settlement title, biome filter and camera travel",
+    "actual canvas pointer picking selects the rendered resident",
+    "resident search empty/recovery, goal and signal inspectors, real JSON download",
+    "follow and stop-follow; panel focus return",
+    "phone portrait/landscape, tablet, evidence close hit-test, Escape and focus return with/without side panel",
+    "real emulated two-touch pinch and one-touch drag, without accidental picking",
+    "simulation advances on resume; all demo requests stay on the static origin"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "w": 390,
+      "h": 844,
+      "overflow": false,
+      "closeReachable": true,
+      "escape": true,
+      "focusReturned": true,
+      "withPanel": true
+    },
+    {
+      "w": 320,
+      "h": 568,
+      "overflow": false,
+      "closeReachable": true,
+      "escape": true,
+      "focusReturned": true,
+      "withPanel": true
+    },
+    {
+      "w": 667,
+      "h": 375,
+      "overflow": false,
+      "closeReachable": true,
+      "escape": true,
+      "focusReturned": true,
+      "withPanel": true
+    },
+    {
+      "w": 844,
+      "h": 390,
+      "overflow": false,
+      "closeReachable": true,
+      "escape": true,
+      "focusReturned": true,
+      "withPanel": true
+    },
+    {
+      "w": 851,
+      "h": 700,
+      "overflow": false,
+      "closeReachable": true,
+      "escape": true,
+      "focusReturned": true,
+      "withPanel": true
+    }
+  ],
+  "timings": [
+    {
+      "biome": "highlands",
+      "frames": 60,
+      "p50": 1.4000000953674316,
+      "p95": 172,
+      "max": 210.30000019073486
+    },
+    {
+      "biome": "desert",
+      "frames": 90,
+      "p50": 1.5,
+      "p95": 66.5,
+      "max": 210.30000019073486
+    },
+    {
+      "biome": "coast",
+      "frames": 105,
+      "p50": 1.3000001907348633,
+      "p95": 66.5,
+      "max": 210.30000019073486
+    },
+    {
+      "biome": "islands",
+      "frames": 120,
+      "p50": 1.0999999046325684,
+      "p95": 66.5,
+      "max": 210.30000019073486
+    }
+  ],
+  "limits": [
+    "WebKit did not launch: browserType.launch: Executable doesn't exist at /opt/imd-tools/ms-playwright/webkit-2365/pw_run.sh ╔════════════════════════════════════════════════════════════╗ ║ Looks like Playwright was just installed or updated.       ║"
+  ]
+}

@@ -1,0 +1,1408 @@
+TAP version 13
+# Subtest: exact original backup and migrated demo reproduce from 600 ordinary updated-engine ticks
+ok 1 - exact original backup and migrated demo reproduce from 600 ordinary updated-engine ticks
+  ---
+  duration_ms: 20506.405853
+  type: 'test'
+  ...
+# Subtest: updated demo exact restart retains goals, trust, brains, families and terrain
+ok 2 - updated demo exact restart retains goals, trust, brains, families and terrain
+  ---
+  duration_ms: 3331.414265
+  type: 'test'
+  ...
+# Subtest: relief is derived from authoritative terrain, with unchanged passability and RNG
+ok 3 - relief is derived from authoritative terrain, with unchanged passability and RNG
+  ---
+  duration_ms: 96.52972
+  type: 'test'
+  ...
+# Subtest: view carries exact working phase, helping target, food input and actual heat, without inventory invention
+ok 4 - view carries exact working phase, helping target, food input and actual heat, without inventory invention
+  ---
+  duration_ms: 12.247043
+  type: 'test'
+  ...
+# Subtest: defect 6: distant sight never reveals store contents; only a visit updates stock memory; no planner leak
+ok 5 - defect 6: distant sight never reveals store contents; only a visit updates stock memory; no planner leak
+  ---
+  duration_ms: 27.494401
+  type: 'test'
+  ...
+# Subtest: defect 7: a ruin is not a store or home; contents are preserved; only repair or explicit nearby salvage recovers them
+ok 6 - defect 7: a ruin is not a store or home; contents are preserved; only repair or explicit nearby salvage recovers them
+  ---
+  duration_ms: 21.387332
+  type: 'test'
+  ...
+# Subtest: defect 8: a newly chosen build step reports starting, then construct with progress; never idle while a step runs
+ok 7 - defect 8: a newly chosen build step reports starting, then construct with progress; never idle while a step runs
+  ---
+  duration_ms: 5627.155869
+  type: 'test'
+  ...
+# Subtest: plant/tend/harvest: soil, climate and water decide growth; yields enter the world and are conserved
+ok 8 - plant/tend/harvest: soil, climate and water decide growth; yields enter the world and are conserved
+  ---
+  duration_ms: 524.856622
+  type: 'test'
+  ...
+# Subtest: cooking: heat from a fire converts raw food 1:1, spends fuel, scorches non-cookables and needs enough fuel
+ok 9 - cooking: heat from a fire converts raw food 1:1, spends fuel, scorches non-cookables and needs enough fuel
+  ---
+  duration_ms: 11.797566
+  type: 'test'
+  ...
+# Subtest: voluntary help: provisioning and repairing another resident's shelter come from own observations and relationships
+ok 10 - voluntary help: provisioning and repairing another resident's shelter come from own observations and relationships
+  ---
+  duration_ms: 7.506289
+  type: 'test'
+  ...
+# Subtest: persistent goals: bounded, interrupted by danger, resumed, and failing strategies are replaced by alternatives
+ok 11 - persistent goals: bounded, interrupted by danger, resumed, and failing strategies are replaced by alternatives
+  ---
+  duration_ms: 6928.971157
+  type: 'test'
+  ...
+# Subtest: signals: neutral glyphs, bounded range, attention, misperception, no intrinsic reward and no dictionary
+ok 12 - signals: neutral glyphs, bounded range, attention, misperception, no intrinsic reward and no dictionary
+  ---
+  duration_ms: 1121.733329
+  type: 'test'
+  ...
+# Subtest: no social reward loops: signal credit is bounded, needs a real positive gain and a tie, and help has no designed drive
+ok 13 - no social reward loops: signal credit is bounded, needs a real positive gain and a tie, and help has no designed drive
+  ---
+  duration_ms: 10463.896202
+  type: 'test'
+  ...
+# Subtest: conservation with crops, cooking, salvage and help over multiple seeds and a depleted-resource run
+ok 14 - conservation with crops, cooking, salvage and help over multiple seeds and a depleted-resource run
+  ---
+  duration_ms: 18342.039819
+  type: 'test'
+  ...
+# Subtest: ground place/carry is a transfer: no repeatable acquisition reward, nothing taught to observers, predictions kept
+ok 15 - ground place/carry is a transfer: no repeatable acquisition reward, nothing taught to observers, predictions kept
+  ---
+  duration_ms: 2.637062
+  type: 'test'
+  ...
+# Subtest: sender credit is local: a settled outcome reaches the sender only through a perceived acknowledgement
+ok 16 - sender credit is local: a settled outcome reaches the sender only through a perceived acknowledgement
+  ---
+  duration_ms: 3.001081
+  type: 'test'
+  ...
+# Subtest: frozen mode writes no learned structures: associations, trust, strategies and models all stay empty
+ok 17 - frozen mode writes no learned structures: associations, trust, strategies and models all stay empty
+  ---
+  duration_ms: 4644.30347
+  type: 'test'
+  ...
+# Subtest: curiosity survives the visited-cell memory cap: a lifetime novel-cell count keeps the goal achievable
+ok 18 - curiosity survives the visited-cell memory cap: a lifetime novel-cell count keeps the goal achievable
+  ---
+  duration_ms: 4.236718
+  type: 'test'
+  ...
+# Subtest: share respects the recipient capacity: refused transfers keep both inventories conserved
+ok 19 - share respects the recipient capacity: refused transfers keep both inventories conserved
+  ---
+  duration_ms: 3.171677
+  type: 'test'
+  ...
+# Subtest: a social goal persists across several interactions, not a single one
+ok 20 - a social goal persists across several interactions, not a single one
+  ---
+  duration_ms: 2.103424
+  type: 'test'
+  ...
+# Subtest: determinism and exact restart with schema 5 state (goals, crops, signals)
+ok 21 - determinism and exact restart with schema 5 state (goals, crops, signals)
+  ---
+  duration_ms: 5147.108654
+  type: 'test'
+  ...
+# Subtest: real schema-4 save migrates to 5 on a copy: identity, learned data and memories kept, original preserved, restart and rollback
+ok 22 - real schema-4 save migrates to 5 on a copy: identity, learned data and memories kept, original preserved, restart and rollback
+  ---
+  duration_ms: 3898.171183
+  type: 'test'
+  ...
+# Subtest: resource budget: per-resident agency state stays bounded and tick cost is measured
+ok 23 - resource budget: per-resident agency state stays bounded and tick cost is measured
+  ---
+  duration_ms: 6566.252726
+  type: 'test'
+  ...
+# Subtest: separate backup CLI refuses a live writer, exports a stopped backup, and restores exact committed state
+ok 24 - separate backup CLI refuses a live writer, exports a stopped backup, and restores exact committed state
+  ---
+  duration_ms: 175.482702
+  type: 'test'
+  ...
+# Subtest: legacy matches recovered engine over 4000 ticks with only the specified starvation correction in the reference
+ok 25 - legacy matches recovered engine over 4000 ticks with only the specified starvation correction in the reference
+  ---
+  duration_ms: 1068.56732
+  type: 'test'
+  ...
+# Subtest: compatibility backup loads in actual recovered binary modules; original backup is byte-identical
+ok 26 - compatibility backup loads in actual recovered binary modules; original backup is byte-identical
+  ---
+  duration_ms: 446.997428
+  type: 'test'
+  ...
+# Subtest: compatibility export rejects tampering and traversal before writing output
+ok 27 - compatibility export rejects tampering and traversal before writing output
+  ---
+  duration_ms: 0.987534
+  type: 'test'
+  ...
+# Subtest: legacy: starvation chooses distance 1 over 11, insertion reverse=false
+ok 28 - legacy: starvation chooses distance 1 over 11, insertion reverse=false
+  ---
+  duration_ms: 8.542996
+  type: 'test'
+  ...
+# Subtest: legacy: starvation chooses distance 1 over 11, insertion reverse=true
+ok 29 - legacy: starvation chooses distance 1 over 11, insertion reverse=true
+  ---
+  duration_ms: 3.899338
+  type: 'test'
+  ...
+# Subtest: legacy: starvation ties use food id, insertion reverse=false
+ok 30 - legacy: starvation ties use food id, insertion reverse=false
+  ---
+  duration_ms: 2.453594
+  type: 'test'
+  ...
+# Subtest: legacy: starvation ties use food id, insertion reverse=true
+ok 31 - legacy: starvation ties use food id, insertion reverse=true
+  ---
+  duration_ms: 2.242905
+  type: 'test'
+  ...
+# Subtest: legacy: starvation skips unreachable and depleted food
+ok 32 - legacy: starvation skips unreachable and depleted food
+  ---
+  duration_ms: 6.515283
+  type: 'test'
+  ...
+# Subtest: legacy: unreachable food across a barrier is skipped; no reachable site triggers search
+ok 33 - legacy: unreachable food across a barrier is skipped; no reachable site triggers search
+  ---
+  duration_ms: 15.750568
+  type: 'test'
+  ...
+# Subtest: mb-v1: starvation chooses distance 1 over 11, insertion reverse=false
+ok 34 - mb-v1: starvation chooses distance 1 over 11, insertion reverse=false
+  ---
+  duration_ms: 3.38373
+  type: 'test'
+  ...
+# Subtest: mb-v1: starvation chooses distance 1 over 11, insertion reverse=true
+ok 35 - mb-v1: starvation chooses distance 1 over 11, insertion reverse=true
+  ---
+  duration_ms: 3.688325
+  type: 'test'
+  ...
+# Subtest: mb-v1: starvation ties use food id, insertion reverse=false
+ok 36 - mb-v1: starvation ties use food id, insertion reverse=false
+  ---
+  duration_ms: 3.30554
+  type: 'test'
+  ...
+# Subtest: mb-v1: starvation ties use food id, insertion reverse=true
+ok 37 - mb-v1: starvation ties use food id, insertion reverse=true
+  ---
+  duration_ms: 2.49816
+  type: 'test'
+  ...
+# Subtest: mb-v1: starvation skips unreachable and depleted food
+ok 38 - mb-v1: starvation skips unreachable and depleted food
+  ---
+  duration_ms: 2.043414
+  type: 'test'
+  ...
+# Subtest: mb-v1: unreachable food across a barrier is skipped; no reachable site triggers search
+ok 39 - mb-v1: unreachable food across a barrier is skipped; no reachable site triggers search
+  ---
+  duration_ms: 6.543992
+  type: 'test'
+  ...
+# Subtest: mb-v1-frozen: starvation chooses distance 1 over 11, insertion reverse=false
+ok 40 - mb-v1-frozen: starvation chooses distance 1 over 11, insertion reverse=false
+  ---
+  duration_ms: 5.024186
+  type: 'test'
+  ...
+# Subtest: mb-v1-frozen: starvation chooses distance 1 over 11, insertion reverse=true
+ok 41 - mb-v1-frozen: starvation chooses distance 1 over 11, insertion reverse=true
+  ---
+  duration_ms: 2.706284
+  type: 'test'
+  ...
+# Subtest: mb-v1-frozen: starvation ties use food id, insertion reverse=false
+ok 42 - mb-v1-frozen: starvation ties use food id, insertion reverse=false
+  ---
+  duration_ms: 1.56104
+  type: 'test'
+  ...
+# Subtest: mb-v1-frozen: starvation ties use food id, insertion reverse=true
+ok 43 - mb-v1-frozen: starvation ties use food id, insertion reverse=true
+  ---
+  duration_ms: 1.401911
+  type: 'test'
+  ...
+# Subtest: mb-v1-frozen: starvation skips unreachable and depleted food
+ok 44 - mb-v1-frozen: starvation skips unreachable and depleted food
+  ---
+  duration_ms: 2.028738
+  type: 'test'
+  ...
+# Subtest: mb-v1-frozen: unreachable food across a barrier is skipped; no reachable site triggers search
+ok 45 - mb-v1-frozen: unreachable food across a barrier is skipped; no reachable site triggers search
+  ---
+  duration_ms: 6.101148
+  type: 'test'
+  ...
+# Subtest: mb-v1-ablated: starvation chooses distance 1 over 11, insertion reverse=false
+ok 46 - mb-v1-ablated: starvation chooses distance 1 over 11, insertion reverse=false
+  ---
+  duration_ms: 2.042952
+  type: 'test'
+  ...
+# Subtest: mb-v1-ablated: starvation chooses distance 1 over 11, insertion reverse=true
+ok 47 - mb-v1-ablated: starvation chooses distance 1 over 11, insertion reverse=true
+  ---
+  duration_ms: 1.183999
+  type: 'test'
+  ...
+# Subtest: mb-v1-ablated: starvation ties use food id, insertion reverse=false
+ok 48 - mb-v1-ablated: starvation ties use food id, insertion reverse=false
+  ---
+  duration_ms: 0.764338
+  type: 'test'
+  ...
+# Subtest: mb-v1-ablated: starvation ties use food id, insertion reverse=true
+ok 49 - mb-v1-ablated: starvation ties use food id, insertion reverse=true
+  ---
+  duration_ms: 0.847594
+  type: 'test'
+  ...
+# Subtest: mb-v1-ablated: starvation skips unreachable and depleted food
+ok 50 - mb-v1-ablated: starvation skips unreachable and depleted food
+  ---
+  duration_ms: 0.924312
+  type: 'test'
+  ...
+# Subtest: mb-v1-ablated: unreachable food across a barrier is skipped; no reachable site triggers search
+ok 51 - mb-v1-ablated: unreachable food across a barrier is skipped; no reachable site triggers search
+  ---
+  duration_ms: 1.789915
+  type: 'test'
+  ...
+# Subtest: mb-v1: target count does not change equal-score action mass or learned action preference
+ok 52 - mb-v1: target count does not change equal-score action mass or learned action preference
+  ---
+  duration_ms: 99.25482
+  type: 'test'
+  ...
+# Subtest: mb-v1-frozen: target count does not change equal-score action mass or learned action preference
+ok 53 - mb-v1-frozen: target count does not change equal-score action mass or learned action preference
+  ---
+  duration_ms: 40.643243
+  type: 'test'
+  ...
+# Subtest: mb-v1-ablated: target count does not change equal-score action mass or learned action preference
+ok 54 - mb-v1-ablated: target count does not change equal-score action mass or learned action preference
+  ---
+  duration_ms: 41.654221
+  type: 'test'
+  ...
+# Subtest: mb-v1: conditional target choices retain unequal learned circuit preferences below emergency hunger
+ok 55 - mb-v1: conditional target choices retain unequal learned circuit preferences below emergency hunger
+  ---
+  duration_ms: 48.810696
+  type: 'test'
+  ...
+# Subtest: ablated control: no circuit learning, zero contribution, accurate flags, retained weights on resumption
+ok 56 - ablated control: no circuit learning, zero contribution, accurate flags, retained weights on resumption
+  ---
+  duration_ms: 2.482991
+  type: 'test'
+  ...
+# Subtest: ablated restart and backup/restore preserve matrices, counters and suspended in-flight learning
+ok 57 - ablated restart and backup/restore preserve matrices, counters and suspended in-flight learning
+  ---
+  duration_ms: 197.885759
+  type: 'test'
+  ...
+# Subtest: inspector reports disabled plasticity during catch-up and in frozen/ablated modes
+ok 58 - inspector reports disabled plasticity during catch-up and in frozen/ablated modes
+  ---
+  duration_ms: 8.481529
+  type: 'test'
+  ...
+# Subtest: mb-v1-frozen: independent wallet memory still follows LEARNING
+ok 59 - mb-v1-frozen: independent wallet memory still follows LEARNING
+  ---
+  duration_ms: 15.499344
+  type: 'test'
+  ...
+# Subtest: mb-v1-ablated: independent wallet memory still follows LEARNING
+ok 60 - mb-v1-ablated: independent wallet memory still follows LEARNING
+  ---
+  duration_ms: 9.90278
+  type: 'test'
+  ...
+# Subtest: intervention IDs remain idempotent beyond the former 20,000-record window
+ok 61 - intervention IDs remain idempotent beyond the former 20,000-record window
+  ---
+  duration_ms: 375.737271
+  type: 'test'
+  ...
+# Subtest: a failed snapshot is never acknowledged as a durable intervention or backup
+ok 62 - a failed snapshot is never acknowledged as a durable intervention or backup
+  ---
+  duration_ms: 207.925076
+  type: 'test'
+  ...
+# Subtest: SIGKILL after lifecycle records but before the snapshot: recovered world never resurrects-and-re-kills
+ok 63 - SIGKILL after lifecycle records but before the snapshot: recovered world never resurrects-and-re-kills
+  ---
+  duration_ms: 2952.1812
+  type: 'test'
+  ...
+# Subtest: SIGKILL at write boundary lifecycle-appended:3, then repeated recovery and continued simulation stay consistent
+ok 64 - SIGKILL at write boundary lifecycle-appended:3, then repeated recovery and continued simulation stay consistent
+  ---
+  duration_ms: 2130.50404
+  type: 'test'
+  ...
+# Subtest: SIGKILL at write boundary events-appended:20, then repeated recovery and continued simulation stay consistent
+ok 65 - SIGKILL at write boundary events-appended:20, then repeated recovery and continued simulation stay consistent
+  ---
+  duration_ms: 2780.370409
+  type: 'test'
+  ...
+# Subtest: SIGKILL at write boundary snapshot-tmp-written:2, then repeated recovery and continued simulation stay consistent
+ok 66 - SIGKILL at write boundary snapshot-tmp-written:2, then repeated recovery and continued simulation stay consistent
+  ---
+  duration_ms: 1180.838789
+  type: 'test'
+  ...
+# Subtest: SIGKILL at write boundary snapshot-committed:3, then repeated recovery and continued simulation stay consistent
+ok 67 - SIGKILL at write boundary snapshot-committed:3, then repeated recovery and continued simulation stay consistent
+  ---
+  duration_ms: 1245.201227
+  type: 'test'
+  ...
+# Subtest: SIGKILL during recovery itself (after the orphan file, before truncation) recovers identically
+ok 68 - SIGKILL during recovery itself (after the orphan file, before truncation) recovers identically
+  ---
+  duration_ms: 1743.626326
+  type: 'test'
+  ...
+# Subtest: interventions: crash before commit is not acknowledged and applies once on retry; crash after commit is a duplicate
+ok 69 - interventions: crash before commit is not acknowledged and applies once on retry; crash after commit is a duplicate
+  ---
+  duration_ms: 460.574952
+  type: 'test'
+  ...
+# Subtest: intervention save failure: 503-style failure, world keeps one application, a later commit makes it durable once
+ok 70 - intervention save failure: 503-style failure, world keeps one application, a later commit makes it durable once
+  ---
+  duration_ms: 24.507884
+  type: 'test'
+  ...
+# Subtest: failed and short event/intervention appends remain pending and a same-ID retry repairs every durable record
+ok 71 - failed and short event/intervention appends remain pending and a same-ID retry repairs every durable record
+  ---
+  duration_ms: 28.965948
+  type: 'test'
+  ...
+# Subtest: recovery refuses an ambiguous Phase-1 lost branch without moving its surviving records
+ok 72 - recovery refuses an ambiguous Phase-1 lost branch without moving its surviving records
+  ---
+  duration_ms: 11.07964
+  type: 'test'
+  ...
+# Subtest: a second recovery at the same snapshot sequence appends evidence instead of overwriting the first orphan
+ok 73 - a second recovery at the same snapshot sequence appends evidence instead of overwriting the first orphan
+  ---
+  duration_ms: 11.461869
+  type: 'test'
+  ...
+# Subtest: event pages preserve UTF-8 characters split across 64 KiB reads
+ok 74 - event pages preserve UTF-8 characters split across 64 KiB reads
+  ---
+  duration_ms: 11.087118
+  type: 'test'
+  ...
+# Subtest: a pending page pins its retained segment while rotation renames it
+ok 75 - a pending page pins its retained segment while rotation renames it
+  ---
+  duration_ms: 7.36093
+  type: 'test'
+  ...
+# Subtest: rotation syncs the outgoing log before closing its descriptor
+ok 76 - rotation syncs the outgoing log before closing its descriptor
+  ---
+  duration_ms: 4.322775
+  type: 'test'
+  ...
+# Subtest: client uses actual HTTP crypto verification and server logout; connecting alone never authenticates
+ok 77 - client uses actual HTTP crypto verification and server logout; connecting alone never authenticates
+  ---
+  duration_ms: 393.06458
+  type: 'test'
+  ...
+# Subtest: account switch mid-signature cannot authenticate old or new account; retry recovers
+ok 78 - account switch mid-signature cannot authenticate old or new account; retry recovers
+  ---
+  duration_ms: 199.205634
+  type: 'test'
+  ...
+# Subtest: network changes and provider disconnect immediately clear/revoke an existing session
+ok 79 - network changes and provider disconnect immediately clear/revoke an existing session
+  ---
+  duration_ms: 199.34948
+  type: 'test'
+  ...
+# Subtest: chain switch mid-signature and silent account changes both reject; no transaction RPC
+ok 80 - chain switch mid-signature and silent account changes both reject; no transaction RPC
+  ---
+  duration_ms: 105.741192
+  type: 'test'
+  ...
+# Subtest: late verification response after account switch is cancelled on server
+ok 81 - late verification response after account switch is cancelled on server
+  ---
+  duration_ms: 127.620414
+  type: 'test'
+  ...
+# Subtest: declined signature, locked wallet and provider timeout leave buttons recoverable
+ok 82 - declined signature, locked wallet and provider timeout leave buttons recoverable
+  ---
+  duration_ms: 200.125926
+  type: 'test'
+  ...
+# Subtest: signature reading timeout is independently bounded and cancelled without shortening backend requests
+ok 83 - signature reading timeout is independently bounded and cancelled without shortening backend requests
+  ---
+  duration_ms: 184.532395
+  type: 'test'
+  ...
+# Subtest: backend timeout/offline logout, unavailable capability and retry
+ok 84 - backend timeout/offline logout, unavailable capability and retry
+  ---
+  duration_ms: 249.692354
+  type: 'test'
+  ...
+# Subtest: exact challenge validation rejects altered server fields before prompting wallet
+ok 85 - exact challenge validation rejects altered server fields before prompting wallet
+  ---
+  duration_ms: 35.937282
+  type: 'test'
+  ...
+# Subtest: missing wallets, EIP-6963 discovery, multiple provider choice, fallback and cleanup
+ok 86 - missing wallets, EIP-6963 discovery, multiple provider choice, fallback and cleanup
+  ---
+  duration_ms: 38.590891
+  type: 'test'
+  ...
+# Subtest: late nonce after disconnect is cancelled; connection timeout/rejection can be retried
+ok 87 - late nonce after disconnect is cancelled; connection timeout/rejection can be retried
+  ---
+  duration_ms: 159.124288
+  type: 'test'
+  ...
+# Subtest: initial wallet announcements during connect are accepted without creating authentication
+ok 88 - initial wallet announcements during connect are accepted without creating authentication
+  ---
+  duration_ms: 100.103797
+  type: 'test'
+  ...
+# Subtest: isolated preview can connect a wallet but cannot request a challenge or fake authentication
+ok 89 - isolated preview can connect a wallet but cannot request a challenge or fake authentication
+  ---
+  duration_ms: 17.87459
+  type: 'test'
+  ...
+# Subtest: silent account switch while verify is in flight rejects and revokes its returned session
+ok 90 - silent account switch while verify is in flight rejects and revokes its returned session
+  ---
+  duration_ms: 129.740843
+  type: 'test'
+  ...
+# Subtest: capability world changes and malformed current-session replies end verification
+ok 91 - capability world changes and malformed current-session replies end verification
+  ---
+  duration_ms: 207.899376
+  type: 'test'
+  ...
+# Subtest: late logout acknowledgement cannot overwrite a newer verified account state
+ok 92 - late logout acknowledgement cannot overwrite a newer verified account state
+  ---
+  duration_ms: 197.69512
+  type: 'test'
+  ...
+# Subtest: expiry timer clears verification and revokes server credential without changing the world
+ok 93 - expiry timer clears verification and revokes server credential without changing the world
+  ---
+  duration_ms: 216.513416
+  type: 'test'
+  ...
+# Subtest: delivered static preview modules match the authoritative shared client bytes
+ok 94 - delivered static preview modules match the authoritative shared client bytes
+  ---
+  duration_ms: 0.482526
+  type: 'test'
+  ...
+# Subtest: real HTTP challenge/signature/login/session/logout; private profile survives restart, world unchanged
+ok 95 - real HTTP challenge/signature/login/session/logout; private profile survives restart, world unchanged
+  ---
+  duration_ms: 368.628061
+  type: 'test'
+  ...
+# Subtest: HTTP rejects wrong signer/address/chain/message/origin, replay and expiry
+ok 96 - HTTP rejects wrong signer/address/chain/message/origin, replay and expiry
+  ---
+  duration_ms: 487.278405
+  type: 'test'
+  ...
+# Subtest: cancel pending or completed challenge safely revokes late authentication
+ok 97 - cancel pending or completed challenge safely revokes late authentication
+  ---
+  duration_ms: 111.852787
+  type: 'test'
+  ...
+# Subtest: malformed input, bounded bodies, exact CORS and method isolation
+ok 98 - malformed input, bounded bodies, exact CORS and method isolation
+  ---
+  duration_ms: 40.522755
+  type: 'test'
+  ...
+# Subtest: bounded nonce/session/profile stores and expiry garbage collection
+ok 99 - bounded nonce/session/profile stores and expiry garbage collection
+  ---
+  duration_ms: 360.824306
+  type: 'test'
+  ...
+# Subtest: per-peer/global rates and bounded rate-key map reject without affecting world
+ok 100 - per-peer/global rates and bounded rate-key map reject without affecting world
+  ---
+  duration_ms: 16.818973
+  type: 'test'
+  ...
+# Subtest: body deadline returns 408; profile write failure and corrupt restart keep anonymous viewing alive
+ok 101 - body deadline returns 408; profile write failure and corrupt restart keep anonymous viewing alive
+  ---
+  duration_ms: 137.330302
+  type: 'test'
+  ...
+# Subtest: invalid configuration cannot enable authentication
+ok 102 - invalid configuration cannot enable authentication
+  ---
+  duration_ms: 0.672359
+  type: 'test'
+  ...
+# Subtest: auth on a copied schema-4 populated world preserves identity through migration and restart
+ok 103 - auth on a copied schema-4 populated world preserves identity through migration and restart
+  ---
+  duration_ms: 495.625133
+  type: 'test'
+  ...
+# Subtest: frame returns real bounded navigation, coherent ticks and the unchanged recorded plan
+ok 104 - frame returns real bounded navigation, coherent ticks and the unchanged recorded plan
+  ---
+  duration_ms: 492.422879
+  type: 'test'
+  ...
+# Subtest: two independent HTTP viewers receive identical authoritative evidence; writes are refused and restart retains minds
+ok 105 - two independent HTTP viewers receive identical authoritative evidence; writes are refused and restart retains minds
+  ---
+  duration_ms: 517.581901
+  type: 'test'
+  ...
+# Subtest: observer navigation does not change creature trajectories or learning
+ok 106 - observer navigation does not change creature trajectories or learning
+  ---
+  duration_ms: 4263.941807
+  type: 'test'
+  ...
+# Subtest: populated legacy migration retains homes, relationships, father, carried/stock resources and original history
+ok 107 - populated legacy migration retains homes, relationships, father, carried/stock resources and original history
+  ---
+  duration_ms: 56.288304
+  type: 'test'
+  ...
+# Subtest: migration refuses active legacy hazards or unfinished buildings rather than dropping them
+ok 108 - migration refuses active legacy hazards or unfinished buildings rather than dropping them
+  ---
+  duration_ms: 14.01633
+  type: 'test'
+  ...
+# Subtest: original 56x56 settlement terrain, IDs and coordinates are preserved
+ok 109 - original 56x56 settlement terrain, IDs and coordinates are preserved
+  ---
+  duration_ms: 31.960213
+  type: 'test'
+  ...
+# Subtest: extent is at least 16x the settlement and contains all four biomes with distinct physics
+ok 110 - extent is at least 16x the settlement and contains all four biomes with distinct physics
+  ---
+  duration_ms: 350.677571
+  type: 'test'
+  ...
+# Subtest: unvisited chunks generate reproducibly; revisited chunks keep modifications across save/load
+ok 111 - unvisited chunks generate reproducibly; revisited chunks keep modifications across save/load
+  ---
+  duration_ms: 48.130493
+  type: 'test'
+  ...
+# Subtest: no spawn traps: every initial creature can reach a large connected area
+ok 112 - no spawn traps: every initial creature can reach a large connected area
+  ---
+  duration_ms: 103.723184
+  type: 'test'
+  ...
+# Subtest: item and node accounting is conserved over a full simulation (no free resources)
+ok 113 - item and node accounting is conserved over a full simulation (no free resources)
+  ---
+  duration_ms: 2404.249459
+  type: 'test'
+  ...
+# Subtest: restart is exact: save/load mid-run equals an uninterrupted run
+ok 114 - restart is exact: save/load mid-run equals an uninterrupted run
+  ---
+  duration_ms: 2422.902637
+  type: 'test'
+  ...
+# Subtest: outcome model, episodic memory and knowledge stay bounded
+ok 115 - outcome model, episodic memory and knowledge stay bounded
+  ---
+  duration_ms: 2028.902292
+  type: 'test'
+  ...
+# Subtest: outcome model learns from transitions with shrinking uncertainty; planner chains on learned produced items only
+ok 116 - outcome model learns from transitions with shrinking uncertainty; planner chains on learned produced items only
+  ---
+  duration_ms: 0.476984
+  type: 'test'
+  ...
+# Subtest: planner compares all root affordances and does not enumerate away later primitive branches
+ok 117 - planner compares all root affordances and does not enumerate away later primitive branches
+  ---
+  duration_ms: 10.258116
+  type: 'test'
+  ...
+# Subtest: energy costs block gathering, shelter construction and attacks without allowing negative energy
+ok 118 - energy costs block gathering, shelter construction and attacks without allowing negative energy
+  ---
+  duration_ms: 3.991321
+  type: 'test'
+  ...
+# Subtest: shelter choices and mb features use only observed or individually remembered shelters
+ok 119 - shelter choices and mb features use only observed or individually remembered shelters
+  ---
+  duration_ms: 3.695787
+  type: 'test'
+  ...
+# Subtest: shelter materials fit the inventory limit and normal gather actions can build one
+ok 120 - shelter materials fit the inventory limit and normal gather actions can build one
+  ---
+  duration_ms: 2.463968
+  type: 'test'
+  ...
+# Subtest: share affordances depend on observed neighbor data, and exhaustion deaths are attributed
+ok 121 - share affordances depend on observed neighbor data, and exhaustion deaths are attributed
+  ---
+  duration_ms: 2.922619
+  type: 'test'
+  ...
+# Subtest: followers pay terrain movement time and energy like other walkers
+ok 122 - followers pay terrain movement time and energy like other walkers
+  ---
+  duration_ms: 110.423916
+  type: 'test'
+  ...
+# Subtest: leadership and read-only world views leave persisted state unchanged
+ok 123 - leadership and read-only world views leave persisted state unchanged
+  ---
+  duration_ms: 16.335987
+  type: 'test'
+  ...
+# Subtest: affordances use only individually acquired knowledge (no omniscient coordinates)
+ok 124 - affordances use only individually acquired knowledge (no omniscient coordinates)
+  ---
+  duration_ms: 4.693478
+  type: 'test'
+  ...
+# Subtest: gathering requires reach; the hand_axe (learned combine) doubles wood yield per step and speeds it
+ok 125 - gathering requires reach; the hand_axe (learned combine) doubles wood yield per step and speeds it
+  ---
+  duration_ms: 2.964166
+  type: 'test'
+  ...
+# Subtest: fire: ignition needs fuel + flint struck with stone; warms, burns, spreads and is extinguished
+ok 126 - fire: ignition needs fuel + flint struck with stone; warms, burns, spreads and is extinguished
+  ---
+  duration_ms: 6.160984
+  type: 'test'
+  ...
+# Subtest: social: attacks need range, cost energy, injure; death only through the health rule; refusal and reputation
+ok 127 - social: attacks need range, cost energy, injure; death only through the health rule; refusal and reputation
+  ---
+  duration_ms: 3.749503
+  type: 'test'
+  ...
+# Subtest: salt water does not quench thirst; water barriers block walking (no teleport)
+ok 128 - salt water does not quench thirst; water barriers block walking (no teleport)
+  ---
+  duration_ms: 93.98705
+  type: 'test'
+  ...
+# Subtest: legacy Phase 2A snapshot migrates without resetting brains, ids or history; newer schema refused
+ok 129 - legacy Phase 2A snapshot migrates without resetting brains, ids or history; newer schema refused
+  ---
+  duration_ms: 356.594191
+  type: 'test'
+  ...
+# Subtest: backup, restore and rollback operate on copies and never discard data
+ok 130 - backup, restore and rollback operate on copies and never discard data
+  ---
+  duration_ms: 499.643198
+  type: 'test'
+  ...
+# Subtest: decisions connect mb-v1 and the planner and record prediction vs actual
+ok 131 - decisions connect mb-v1 and the planner and record prediction vs actual
+  ---
+  duration_ms: 2077.355741
+  type: 'test'
+  ...
+# Subtest: read-only service: runs without viewers, two clients see the same world, writes are rejected, restart resumes
+ok 132 - read-only service: runs without viewers, two clients see the same world, writes are rejected, restart resumes
+  ---
+  duration_ms: 398.526689
+  type: 'test'
+  ...
+# Subtest: GET /api/expanse/info leaves the saved world state unchanged
+ok 133 - GET /api/expanse/info leaves the saved world state unchanged
+  ---
+  duration_ms: 25.275225
+  type: 'test'
+  ...
+# Subtest: static inspector uses real server data, GET-only transport, isolated live circuit and frozen heldout evaluation
+ok 134 - static inspector uses real server data, GET-only transport, isolated live circuit and frozen heldout evaluation
+  ---
+  duration_ms: 233.210778
+  type: 'test'
+  ...
+# Subtest: static circuit assets match exact server implementation
+ok 135 - static circuit assets match exact server implementation
+  ---
+  duration_ms: 1.501685
+  type: 'test'
+  ...
+# Subtest: portable browser restore preserves the exact owner save representation and deterministic continuation
+ok 136 - portable browser restore preserves the exact owner save representation and deterministic continuation
+  ---
+  duration_ms: 267.636271
+  type: 'test'
+  ...
+# Subtest: living viewport biome, climate, construction and store fields describe the same engine without exposing knowledge to agents
+ok 137 - living viewport biome, climate, construction and store fields describe the same engine without exposing knowledge to agents
+  ---
+  duration_ms: 192.821879
+  type: 'test'
+  ...
+# Subtest: shipped demo (schema-4 checkpoint, migrated in memory to 5) is a complete world with natural histories and functional shelters across all biomes
+ok 138 - shipped demo (schema-4 checkpoint, migrated in memory to 5) is a complete world with natural histories and functional shelters across all biomes
+  ---
+  duration_ms: 714.82034
+  type: 'test'
+  ...
+# Subtest: fish stocks exist in every biome, sit on water and are reachable from a walkable shore
+ok 139 - fish stocks exist in every biome, sit on water and are reachable from a walkable shore
+  ---
+  duration_ms: 548.273369
+  type: 'test'
+  ...
+# Subtest: fishing requires a line, time and energy; stock depletes, regrows exactly and never exceeds its limit; lines wear out
+ok 140 - fishing requires a line, time and energy; stock depletes, regrows exactly and never exceeds its limit; lines wear out
+  ---
+  duration_ms: 108.078554
+  type: 'test'
+  ...
+# Subtest: fish are perceived only from the shore, not across the whole perception radius
+ok 141 - fish are perceived only from the shore, not across the whole perception radius
+  ---
+  duration_ms: 109.602232
+  type: 'test'
+  ...
+# Subtest: construction needs the biome design's materials; stages follow delivered materials and labour; sites give no shelter
+ok 142 - construction needs the biome design's materials; stages follow delivered materials and labour; sites give no shelter
+  ---
+  duration_ms: 100.091622
+  type: 'test'
+  ...
+# Subtest: shelters decay with biome-specific rates, ruins give no protection and repair consumes a building material
+ok 143 - shelters decay with biome-specific rates, ruins give no protection and repair consumes a building material
+  ---
+  duration_ms: 3.601121
+  type: 'test'
+  ...
+# Subtest: shared stores: deposit and retrieve conserve items, respect capacity, and stale memories are corrected not trusted
+ok 144 - shared stores: deposit and retrieve conserve items, respect capacity, and stale memories are corrected not trusted
+  ---
+  duration_ms: 4.01624
+  type: 'test'
+  ...
+# Subtest: climate: desert heat raises thirst and walking cost, cold drains warmth, shelters insulate and shade
+ok 145 - climate: desert heat raises thirst and walking cost, cold drains warmth, shelters insulate and shade
+  ---
+  duration_ms: 137.837029
+  type: 'test'
+  ...
+# Subtest: conservation holds over long multi-seed runs including stores, construction, repair, fishing and tool wear
+ok 146 - conservation holds over long multi-seed runs including stores, construction, repair, fishing and tool wear
+  ---
+  duration_ms: 17226.692295
+  type: 'test'
+  ...
+# Subtest: render states follow engine state: fishing only while fishing, loads only when carried, construction only with progress
+ok 147 - render states follow engine state: fishing only while fishing, loads only when carried, construction only with progress
+  ---
+  duration_ms: 3951.241174
+  type: 'test'
+  ...
+# Subtest: agents explore beyond the original settlement, found shelters away from it and keep births/deaths
+ok 148 - agents explore beyond the original settlement, found shelters away from it and keep births/deaths
+  ---
+  duration_ms: 11898.368966
+  type: 'test'
+  ...
+# Subtest: same seed gives identical saves (determinism) and restart mid-run equals an uninterrupted run
+ok 149 - same seed gives identical saves (determinism) and restart mid-run equals an uninterrupted run
+  ---
+  duration_ms: 4553.85465
+  type: 'test'
+  ...
+# Subtest: real schema-3 save migrates (3->4->5) on a copy: identity, learned data and memories kept, original preserved, restart and rollback work
+ok 150 - real schema-3 save migrates (3->4->5) on a copy: identity, learned data and memories kept, original preserved, restart and rollback work
+  ---
+  duration_ms: 2745.573652
+  type: 'test'
+  ...
+# Subtest: the v3 fixture keeps running for a long time after migration with bounded memory per creature
+ok 151 - the v3 fixture keeps running for a long time after migration with bounded memory per creature
+  ---
+  duration_ms: 4806.743877
+  type: 'test'
+  ...
+# Subtest: MB circuit: deterministic sparse expansion, opponent plasticity, bounded storage, independent state
+ok 152 - MB circuit: deterministic sparse expansion, opponent plasticity, bounded storage, independent state
+  ---
+  duration_ms: 10.95115
+  type: 'test'
+  ...
+# Subtest: schema 2 -> 3 adds metadata only; explicit activation retains legacy state and global RNG
+ok 153 - schema 2 -> 3 adds metadata only; explicit activation retains legacy state and global RNG
+  ---
+  duration_ms: 28.754805
+  type: 'test'
+  ...
+# Subtest: default legacy and explicit configuration validation; unset restart retains stored mode
+ok 154 - default legacy and explicit configuration validation; unset restart retains stored mode
+  ---
+  duration_ms: 78.202378
+  type: 'test'
+  ...
+# Subtest: frozen learning, LEARNING=false, catchup and in-flight mode changes never alter neural weights
+ok 155 - frozen learning, LEARNING=false, catchup and in-flight mode changes never alter neural weights
+  ---
+  duration_ms: 5.336887
+  type: 'test'
+  ...
+# Subtest: ten fixed seeds: acquisition, heldout freeze, reversal, causal lesion and exact restart
+ok 156 - ten fixed seeds: acquisition, heldout freeze, reversal, causal lesion and exact restart
+  ---
+  duration_ms: 4467.145044
+  type: 'test'
+  ...
+# Subtest: actual decision/execution uses candidate target associations and consumes shared world food
+ok 157 - actual decision/execution uses candidate target associations and consumes shared world food
+  ---
+  duration_ms: 26.184156
+  type: 'test'
+  ...
+# Subtest: observation bounds exclude remote cue changes
+ok 158 - observation bounds exclude remote cue changes
+  ---
+  duration_ms: 1.817675
+  type: 'test'
+  ...
+# Subtest: exact neural/RNG/action retention through service restart, backup restore, and rollback on copied world
+ok 159 - exact neural/RNG/action retention through service restart, backup restore, and rollback on copied world
+  ---
+  duration_ms: 523.445864
+  type: 'test'
+  ...
+# Subtest: two actual clients see same server decisions; inspector is read-only and no mode mutation API exists
+ok 160 - two actual clients see same server decisions; inspector is read-only and no mode mutation API exists
+  ---
+  duration_ms: 112.974338
+  type: 'test'
+  ...
+# Subtest: actual health loss supplies punishment to the stored sensory eligibility
+ok 161 - actual health loss supplies punishment to the stored sensory eligibility
+  ---
+  duration_ms: 2.847383
+  type: 'test'
+  ...
+# Subtest: GET /api/events: three 5 MB logs, after=0 limit=1, concurrent requests are bounded and do not stall ticks
+ok 162 - GET /api/events: three 5 MB logs, after=0 limit=1, concurrent requests are bounded and do not stall ticks
+  ---
+  duration_ms: 868.702098
+  type: 'test'
+  ...
+# Subtest: event reads beyond the concurrency cap get an honest 503, not unbounded queued disk work
+ok 163 - event reads beyond the concurrency cap get an honest 503, not unbounded queued disk work
+  ---
+  duration_ms: 228.209416
+  type: 'test'
+  ...
+# Subtest: rate limits: creature detail and list share the public limiter, 429 has Retry-After, recovery after window
+ok 164 - rate limits: creature detail and list share the public limiter, 429 has Retry-After, recovery after window
+  ---
+  duration_ms: 29.817852
+  type: 'test'
+  ...
+# Subtest: spoofed X-Forwarded-For cannot bypass limits (Caddy deployment: TRUST_PROXY=1, proxy on private network)
+ok 165 - spoofed X-Forwarded-For cannot bypass limits (Caddy deployment: TRUST_PROXY=1, proxy on private network)
+  ---
+  duration_ms: 21.67634
+  type: 'test'
+  ...
+# Subtest: WebSocket upgrade and resync share the public-read budget and close on resync abuse
+ok 166 - WebSocket upgrade and resync share the public-read budget and close on resync abuse
+  ---
+  duration_ms: 21.712233
+  type: 'test'
+  ...
+# Subtest: event API and WebSocket snapshots expose only committed cursors across a crash/restart
+ok 167 - event API and WebSocket snapshots expose only committed cursors across a crash/restart
+  ---
+  duration_ms: 45.374131
+  type: 'test'
+  ...
+# Subtest: HTTP intervention retry returns 503 until failed event or ledger append is repaired
+ok 168 - HTTP intervention retry returns 503 until failed event or ledger append is repaired
+  ---
+  duration_ms: 126.085157
+  type: 'test'
+  ...
+# Subtest: a stale numeric PID-1 lock is not considered live by an offline one-shot container/tool
+ok 169 - a stale numeric PID-1 lock is not considered live by an offline one-shot container/tool
+  ---
+  duration_ms: 0.601847
+  type: 'test'
+  ...
+# Subtest: LEARNING: explicit change applies on restart without erasing weights/memory; unset keeps stored; invalid fails startup
+ok 170 - LEARNING: explicit change applies on restart without erasing weights/memory; unset keeps stored; invalid fails startup
+  ---
+  duration_ms: 3899.244537
+  type: 'test'
+  ...
+# Subtest: GET /api/status reports the learning policy
+ok 171 - GET /api/status reports the learning policy
+  ---
+  duration_ms: 12.524949
+  type: 'test'
+  ...
+# Subtest: intervention idempotency is scoped to world + authenticated actor + id, persisted across restart
+ok 172 - intervention idempotency is scoped to world + authenticated actor + id, persisted across restart
+  ---
+  duration_ms: 292.459783
+  type: 'test'
+  ...
+# Subtest: schema v1 -> v2 migration re-keys existing intervention IDs to their original actor
+ok 173 - schema v1 -> v2 migration re-keys existing intervention IDs to their original actor
+  ---
+  duration_ms: 0.385718
+  type: 'test'
+  ...
+# Subtest: legacy: emergency sees both full sites beyond 9 depleted sites; reverse=false
+ok 174 - legacy: emergency sees both full sites beyond 9 depleted sites; reverse=false
+  ---
+  duration_ms: 7.616672
+  type: 'test'
+  ...
+# Subtest: legacy: emergency sees both full sites beyond 10 depleted sites; reverse=false
+ok 175 - legacy: emergency sees both full sites beyond 10 depleted sites; reverse=false
+  ---
+  duration_ms: 2.775113
+  type: 'test'
+  ...
+# Subtest: legacy: emergency distance tie beyond the cap uses stable food id; reverse=false
+ok 176 - legacy: emergency distance tie beyond the cap uses stable food id; reverse=false
+  ---
+  duration_ms: 2.234042
+  type: 'test'
+  ...
+# Subtest: legacy: emergency sees both full sites beyond 9 depleted sites; reverse=true
+ok 177 - legacy: emergency sees both full sites beyond 9 depleted sites; reverse=true
+  ---
+  duration_ms: 1.978418
+  type: 'test'
+  ...
+# Subtest: legacy: emergency sees both full sites beyond 10 depleted sites; reverse=true
+ok 178 - legacy: emergency sees both full sites beyond 10 depleted sites; reverse=true
+  ---
+  duration_ms: 2.019697
+  type: 'test'
+  ...
+# Subtest: legacy: emergency distance tie beyond the cap uses stable food id; reverse=true
+ok 179 - legacy: emergency distance tie beyond the cap uses stable food id; reverse=true
+  ---
+  duration_ms: 1.77675
+  type: 'test'
+  ...
+# Subtest: legacy: emergency unions remembered sites with all sensed sites and filters feasibility
+ok 180 - legacy: emergency unions remembered sites with all sensed sites and filters feasibility
+  ---
+  duration_ms: 6.021189
+  type: 'test'
+  ...
+# Subtest: legacy: non-emergency decisions retain the existing capped candidate memory
+ok 181 - legacy: non-emergency decisions retain the existing capped candidate memory
+  ---
+  duration_ms: 3.049524
+  type: 'test'
+  ...
+# Subtest: legacy: accepted-parent decision survives explicit startup switch and another restart without decide
+ok 182 - legacy: accepted-parent decision survives explicit startup switch and another restart without decide
+  ---
+  duration_ms: 22.377923
+  type: 'test'
+  ...
+# Subtest: mb-v1: emergency sees both full sites beyond 9 depleted sites; reverse=false
+ok 183 - mb-v1: emergency sees both full sites beyond 9 depleted sites; reverse=false
+  ---
+  duration_ms: 5.669403
+  type: 'test'
+  ...
+# Subtest: mb-v1: emergency sees both full sites beyond 10 depleted sites; reverse=false
+ok 184 - mb-v1: emergency sees both full sites beyond 10 depleted sites; reverse=false
+  ---
+  duration_ms: 5.142507
+  type: 'test'
+  ...
+# Subtest: mb-v1: emergency distance tie beyond the cap uses stable food id; reverse=false
+ok 185 - mb-v1: emergency distance tie beyond the cap uses stable food id; reverse=false
+  ---
+  duration_ms: 3.552666
+  type: 'test'
+  ...
+# Subtest: mb-v1: emergency sees both full sites beyond 9 depleted sites; reverse=true
+ok 186 - mb-v1: emergency sees both full sites beyond 9 depleted sites; reverse=true
+  ---
+  duration_ms: 3.398191
+  type: 'test'
+  ...
+# Subtest: mb-v1: emergency sees both full sites beyond 10 depleted sites; reverse=true
+ok 187 - mb-v1: emergency sees both full sites beyond 10 depleted sites; reverse=true
+  ---
+  duration_ms: 3.581917
+  type: 'test'
+  ...
+# Subtest: mb-v1: emergency distance tie beyond the cap uses stable food id; reverse=true
+ok 188 - mb-v1: emergency distance tie beyond the cap uses stable food id; reverse=true
+  ---
+  duration_ms: 3.318358
+  type: 'test'
+  ...
+# Subtest: mb-v1: emergency unions remembered sites with all sensed sites and filters feasibility
+ok 189 - mb-v1: emergency unions remembered sites with all sensed sites and filters feasibility
+  ---
+  duration_ms: 4.380383
+  type: 'test'
+  ...
+# Subtest: mb-v1: non-emergency decisions retain the existing capped candidate memory
+ok 190 - mb-v1: non-emergency decisions retain the existing capped candidate memory
+  ---
+  duration_ms: 1.911022
+  type: 'test'
+  ...
+# Subtest: mb-v1: accepted-parent decision survives explicit startup switch and another restart without decide
+ok 191 - mb-v1: accepted-parent decision survives explicit startup switch and another restart without decide
+  ---
+  duration_ms: 16.610927
+  type: 'test'
+  ...
+# Subtest: mb-v1-frozen: emergency sees both full sites beyond 9 depleted sites; reverse=false
+ok 192 - mb-v1-frozen: emergency sees both full sites beyond 9 depleted sites; reverse=false
+  ---
+  duration_ms: 1.095407
+  type: 'test'
+  ...
+# Subtest: mb-v1-frozen: emergency sees both full sites beyond 10 depleted sites; reverse=false
+ok 193 - mb-v1-frozen: emergency sees both full sites beyond 10 depleted sites; reverse=false
+  ---
+  duration_ms: 1.56173
+  type: 'test'
+  ...
+# Subtest: mb-v1-frozen: emergency distance tie beyond the cap uses stable food id; reverse=false
+ok 194 - mb-v1-frozen: emergency distance tie beyond the cap uses stable food id; reverse=false
+  ---
+  duration_ms: 0.935179
+  type: 'test'
+  ...
+# Subtest: mb-v1-frozen: emergency sees both full sites beyond 9 depleted sites; reverse=true
+ok 195 - mb-v1-frozen: emergency sees both full sites beyond 9 depleted sites; reverse=true
+  ---
+  duration_ms: 1.273812
+  type: 'test'
+  ...
+# Subtest: mb-v1-frozen: emergency sees both full sites beyond 10 depleted sites; reverse=true
+ok 196 - mb-v1-frozen: emergency sees both full sites beyond 10 depleted sites; reverse=true
+  ---
+  duration_ms: 2.144789
+  type: 'test'
+  ...
+# Subtest: mb-v1-frozen: emergency distance tie beyond the cap uses stable food id; reverse=true
+ok 197 - mb-v1-frozen: emergency distance tie beyond the cap uses stable food id; reverse=true
+  ---
+  duration_ms: 1.519953
+  type: 'test'
+  ...
+# Subtest: mb-v1-frozen: emergency unions remembered sites with all sensed sites and filters feasibility
+ok 198 - mb-v1-frozen: emergency unions remembered sites with all sensed sites and filters feasibility
+  ---
+  duration_ms: 1.745912
+  type: 'test'
+  ...
+# Subtest: mb-v1-frozen: non-emergency decisions retain the existing capped candidate memory
+ok 199 - mb-v1-frozen: non-emergency decisions retain the existing capped candidate memory
+  ---
+  duration_ms: 1.251623
+  type: 'test'
+  ...
+# Subtest: mb-v1-frozen: accepted-parent decision survives explicit startup switch and another restart without decide
+ok 200 - mb-v1-frozen: accepted-parent decision survives explicit startup switch and another restart without decide
+  ---
+  duration_ms: 14.280573
+  type: 'test'
+  ...
+# Subtest: mb-v1-ablated: emergency sees both full sites beyond 9 depleted sites; reverse=false
+ok 201 - mb-v1-ablated: emergency sees both full sites beyond 9 depleted sites; reverse=false
+  ---
+  duration_ms: 2.017472
+  type: 'test'
+  ...
+# Subtest: mb-v1-ablated: emergency sees both full sites beyond 10 depleted sites; reverse=false
+ok 202 - mb-v1-ablated: emergency sees both full sites beyond 10 depleted sites; reverse=false
+  ---
+  duration_ms: 1.189054
+  type: 'test'
+  ...
+# Subtest: mb-v1-ablated: emergency distance tie beyond the cap uses stable food id; reverse=false
+ok 203 - mb-v1-ablated: emergency distance tie beyond the cap uses stable food id; reverse=false
+  ---
+  duration_ms: 0.985972
+  type: 'test'
+  ...
+# Subtest: mb-v1-ablated: emergency sees both full sites beyond 9 depleted sites; reverse=true
+ok 204 - mb-v1-ablated: emergency sees both full sites beyond 9 depleted sites; reverse=true
+  ---
+  duration_ms: 1.063053
+  type: 'test'
+  ...
+# Subtest: mb-v1-ablated: emergency sees both full sites beyond 10 depleted sites; reverse=true
+ok 205 - mb-v1-ablated: emergency sees both full sites beyond 10 depleted sites; reverse=true
+  ---
+  duration_ms: 1.154837
+  type: 'test'
+  ...
+# Subtest: mb-v1-ablated: emergency distance tie beyond the cap uses stable food id; reverse=true
+ok 206 - mb-v1-ablated: emergency distance tie beyond the cap uses stable food id; reverse=true
+  ---
+  duration_ms: 1.167078
+  type: 'test'
+  ...
+# Subtest: mb-v1-ablated: emergency unions remembered sites with all sensed sites and filters feasibility
+ok 207 - mb-v1-ablated: emergency unions remembered sites with all sensed sites and filters feasibility
+  ---
+  duration_ms: 2.199106
+  type: 'test'
+  ...
+# Subtest: mb-v1-ablated: non-emergency decisions retain the existing capped candidate memory
+ok 208 - mb-v1-ablated: non-emergency decisions retain the existing capped candidate memory
+  ---
+  duration_ms: 0.918234
+  type: 'test'
+  ...
+# Subtest: mb-v1-ablated: accepted-parent decision survives explicit startup switch and another restart without decide
+ok 209 - mb-v1-ablated: accepted-parent decision survives explicit startup switch and another restart without decide
+  ---
+  duration_ms: 12.745122
+  type: 'test'
+  ...
+# Subtest: two clients share identical state; reconnect resyncs without duplicate events
+ok 210 - two clients share identical state; reconnect resyncs without duplicate events
+  ---
+  duration_ms: 376.239233
+  type: 'test'
+  ...
+# Subtest: unauthorized access to developer endpoints is rejected; visitor token is not enough
+ok 211 - unauthorized access to developer endpoints is rejected; visitor token is not enough
+  ---
+  duration_ms: 145.2221
+  type: 'test'
+  ...
+# Subtest: duplicate intervention ids apply once, survive restart; id reuse with different body is rejected
+ok 212 - duplicate intervention ids apply once, survive restart; id reuse with different body is rejected
+  ---
+  duration_ms: 145.505919
+  type: 'test'
+  ...
+# Subtest: restart recovery: same world, learned state retained, no reseed, no duplicate world_created
+ok 213 - restart recovery: same world, learned state retained, no reseed, no duplicate world_created
+  ---
+  duration_ms: 1253.819797
+  type: 'test'
+  ...
+# Subtest: corrupt snapshots never trigger a silent new world; fallback to previous snapshot works
+ok 214 - corrupt snapshots never trigger a silent new world; fallback to previous snapshot works
+  ---
+  duration_ms: 126.899022
+  type: 'test'
+  ...
+# Subtest: downtime: capped, non-lethal catch-up; no mass death after a long outage
+ok 215 - downtime: capped, non-lethal catch-up; no mass death after a long outage
+  ---
+  duration_ms: 153.577915
+  type: 'test'
+  ...
+# Subtest: backup and restore bring back an earlier state; tampered backup is refused
+ok 216 - backup and restore bring back an earlier state; tampered backup is refused
+  ---
+  duration_ms: 322.082728
+  type: 'test'
+  ...
+# Subtest: schema migration from legacy v0 snapshot; newer schemas refused
+ok 217 - schema migration from legacy v0 snapshot; newer schemas refused
+  ---
+  duration_ms: 0.588491
+  type: 'test'
+  ...
+# Subtest: developer reset: requires auth + confirmation; archives; extinct world stays extinct until then
+ok 218 - developer reset: requires auth + confirmation; archives; extinct world stays extinct until then
+  ---
+  duration_ms: 217.655136
+  type: 'test'
+  ...
+# Subtest: visitor endpoints over HTTP: gift and startle with wallet sessions
+ok 219 - visitor endpoints over HTTP: gift and startle with wallet sessions
+  ---
+  duration_ms: 102.71591
+  type: 'test'
+  ...
+# Subtest: deterministic: same seed gives identical state; different seed differs
+ok 220 - deterministic: same seed gives identical state; different seed differs
+  ---
+  duration_ms: 375.824004
+  type: 'test'
+  ...
+# Subtest: initial seed of 24 is a seed, not a cap; autonomous feeding, gathering and building with real costs
+ok 221 - initial seed of 24 is a seed, not a cap; autonomous feeding, gathering and building with real costs
+  ---
+  duration_ms: 308.648006
+  type: 'test'
+  ...
+# Subtest: reproduction needs adulthood, shelter and food; offspring grow before fertility; recovery period
+ok 222 - reproduction needs adulthood, shelter and food; offspring grow before fertility; recovery period
+  ---
+  duration_ms: 5758.892993
+  type: 'test'
+  ...
+# Subtest: scarcity suppresses reproduction, harms health, kills by starvation; extinction preserves history and stops births
+ok 223 - scarcity suppresses reproduction, harms health, kills by starvation; extinction preserves history and stops births
+  ---
+  duration_ms: 101.524202
+  type: 'test'
+  ...
+# Subtest: disasters damage creatures and shelters; heal and food interventions help; bounds enforced
+ok 224 - disasters damage creatures and shelters; heal and food interventions help; bounds enforced
+  ---
+  duration_ms: 276.76919
+  type: 'test'
+  ...
+# Subtest: creatures react to fire (flee) and recover afterwards
+ok 225 - creatures react to fire (flee) and recover afterwards
+  ---
+  duration_ms: 153.587005
+  type: 'test'
+  ...
+# Subtest: visitor wallets: helpful vs harmful opinions change approach/avoid; disabled learning does not
+ok 226 - visitor wallets: helpful vs harmful opinions change approach/avoid; disabled learning does not
+  ---
+  duration_ms: 630.326688
+  type: 'test'
+  ...
+# Subtest: learning changes weights; disabled keeps priors; speech is labelled template
+ok 227 - learning changes weights; disabled keeps priors; speech is labelled template
+  ---
+  duration_ms: 184.678571
+  type: 'test'
+  ...
+# Subtest: keccak256 and address derivation known vectors
+ok 228 - keccak256 and address derivation known vectors
+  ---
+  duration_ms: 3.164863
+  type: 'test'
+  ...
+# Subtest: signature roundtrip and tamper detection
+ok 229 - signature roundtrip and tamper detection
+  ---
+  duration_ms: 135.943755
+  type: 'test'
+  ...
+# Subtest: sign-in: nonce single-use, origin bound, expiry, roles
+ok 230 - sign-in: nonce single-use, origin bound, expiry, roles
+  ---
+  duration_ms: 343.258501
+  type: 'test'
+  ...
+# Subtest: server recovers the signer of every ethers-generated valid signature
+ok 231 - server recovers the signer of every ethers-generated valid signature
+  ---
+  duration_ms: 623.050899
+  type: 'test'
+  ...
+# Subtest: invalid signatures never recover the claimed address (and agree with ethers where ethers recovers)
+ok 232 - invalid signatures never recover the claimed address (and agree with ethers where ethers recovers)
+  ---
+  duration_ms: 194.535288
+  type: 'test'
+  ...
+# Subtest: server-side test signer output is a canonical signature ethers-compatible in shape
+ok 233 - server-side test signer output is a canonical signature ethers-compatible in shape
+  ---
+  duration_ms: 84.832785
+  type: 'test'
+  ...
+1..233
+# tests 233
+# suites 0
+# pass 233
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 109658.74566

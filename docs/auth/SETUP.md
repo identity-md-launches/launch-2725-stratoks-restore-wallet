@@ -50,17 +50,52 @@ The existing pinned Node base image and `COPY server/` plus `COPY shared/` are r
 sh deploy/expanse/check-auth-image.sh linux/arm64
 ```
 
-The script builds/loads the actual Dockerfile, starts it as the unprivileged node user with a disposable tmpfs `/data`, checks module imports, makes a real disposable signature, verifies current session and logout revocation, confirms anonymous frames, reports `process.arch`, and removes the container. It never mounts any live volume and prints no credentials. For a native x86 smoke check use `linux/amd64`; this is not ARM proof. On this authoring machine Docker is unavailable: image build/start/ARM execution are **unverified**, despite successful Node module checks. Do not treat the script's existence as a passing result.
+The script builds/loads the actual Dockerfile, starts it as the unprivileged node user with a disposable tmpfs `/data`, checks module imports, makes a real disposable signature, verifies current session and logout revocation, confirms anonymous frames, reports `process.arch`, and removes the container. It never mounts any live volume and prints no credentials. For a native x86 smoke check use `linux/amd64`; this is not ARM proof. The current ARM build/start attempt failed with `docker: Permission denied` (raw `artifacts/visitor-auth/docker-arm.log`): image build/start/ARM execution are **unverified**, despite successful Node module checks. Do not treat the script's existence as a passing result.
 
 For an owner deployment, `deploy/expanse/compose.yml` now forwards optional `AUTH_URI`, `AUTH_ALLOWED_ORIGINS`, `AUTH_CHAINS` from the owner's Compose environment; empty URI leaves login disabled. Keep the existing volume and resource limits. Configure those values in the owner's protected environment, then run the established owner-controlled compose rollout. No production rollout was performed here. The local demo's server is not the production entry point, and changing static hosting alone cannot enable authentication.
 
-## HUD integration boundary
+## Current HUD integration
 
-The current HUD is in `web/`, outside this assignment's editable scope. It is unchanged. Integrators should use [`shared/visitor-auth-client.js`](../../shared/visitor-auth-client.js) and [API v1](API-v1.md), with the **existing** configured backend URL and owner-approved canonical URI. The isolated demo is the reference browser flow; it is not a replacement for Expanse navigation/inspectors.
+The current HUD now includes `web/src/expanse/VisitorWallet.tsx`, using [`shared/visitor-auth-client.js`](../../shared/visitor-auth-client.js) and [API v1](API-v1.md). It has no import from the legacy wallet/developer transport. The top-right Connect wallet control opens an accessible native dialog on desktop and phone. Choose an EIP-6963 provider (or legacy browser provider), connect, then explicitly select **Sign in with message**. The full account address, verified private visit count, session expiry and restart behavior are visible. Sign out requires an API acknowledgment; offline revocation is labeled pending and offers retry. Browsing and every inspector/navigation control work without an account.
 
-Create one controller per backend/world; call `destroy()` before replacing it. Subscribe `onChange` to show disconnected, connected (not authenticated), signing, verified, expired and unavailable states. Only offer sign-in after `loadConfig()` succeeds and wallet chain is supported. Keep controls accessible and clear of mobile navigation; explain every disabled action. Discover provider announcements, present choices, and call `connect(chosenProvider)` only following user action. Call `signIn()` explicitly; do not auto-sign on connect. Use `logout()` and display its server-confirmed or offline-pending result. Poll `refreshSession()` periodically and on focus/online to detect server restart; do not claim that local state alone proves current server verification. Never pause, step, reset or otherwise mutate the world while logging in.
+The HUD expects `AUTH_URI` to equal the selected backend base URL plus `/`, including any reverse-proxy prefix. For example a backend base `https://world.example/expanse` needs `AUTH_URI=https://world.example/expanse/`. A mismatch disables signing. Challenge address, chain, domain, origin, URI, world, nonce, exact message and timestamps are checked before `personal_sign`; account and network are checked before signing, before verify and after the verification reply. Account/network/disconnect/world changes discard earlier asynchronous results and cancel the nonce/revoke the session. A known frame-world change also recreates the private auth controller. Session checks run every 30 seconds while verified and on focus, tab visibility, online events and opening the account dialog. Backend restart is discovered on that next check (or immediately when making an auth request); it does not pause the world.
 
-`onChange.session` includes a credential: use it only in private UI state, never store/export/log the whole state object. The controller's revocation queue exists only in memory. A tab closed while offline cannot confirm server logout; fixed one-hour expiry/server restart is the final bound. In-flight cancellation is idempotent on the server whether received before or after verify. Backend changes require destroying the old controller so delayed responses cannot authenticate another world.
+Backend/connection requests have a 10-second deadline. The HUD allows 60 seconds to read and sign the wallet message, within the default 120-second nonce lifetime. Cancel attempt clears local authentication and cancels its nonce; dismiss any remaining wallet-owned prompt before retrying. No timed-out prompt can later authenticate a different attempt.
+
+For same-origin owner hosting, adapt the existing proxy rather than routing auth to the old settlement service. A Caddy pattern for a dedicated Expanse origin is below; the owner supplies the domain and installs the built export at the indicated static root. Keep private world/profile directories outside that root. This is documentation, not a deployed configuration:
+
+```caddy
+{$STRATOKS_WORLD_DOMAIN} {
+    handle /api/* {
+        reverse_proxy 127.0.0.1:8788
+    }
+    handle /healthz {
+        reverse_proxy 127.0.0.1:8788
+    }
+    handle {
+        root * /srv/stratoks/dist
+        file_server
+    }
+}
+```
+
+Use the existing backend port if different. Set the frontend `httpUrl` and `AUTH_URI` consistently with that origin/base, retain `legacyAvailable:false`, and preserve any unrelated existing owner proxy routes. A public preview hosted elsewhere additionally requires its exact HTTPS origin in both applicable allowlists; no wildcard or cookie credential flow is needed.
+
+`web/public/expanse-config.json` and the owner live URL are preserved. Automatic `startMode:live` applies only on the configured service's same origin; a different static preview starts the real isolated browser simulation. Explicit Choose world / `?server=` / a remembered source choice still select a permitted backend. Configure both exact world CORS and auth origins for cross-origin previews. Isolated browser/recorded modes never authenticate, even if that hosting origin happens to expose `/api`. Nothing installs or enables the backend when the frontend is hosted.
+
+Wallet discovery/connection is still usable in an isolated static preview. Its controller has an explicitly null backend, makes no auth request and shows **Connected · not signed in** after connection. The sign-in action is absent there. Selecting a real world replaces that controller, then checks that backend before offering authentication. This is a provider connection, never a fake local account.
+
+To run the actual production HUD with a real isolated authentication backend after building `dist/`:
+
+```sh
+node deploy/auth-demo/hud.mjs
+```
+
+Open `http://127.0.0.1:8791/preview/`. This dedicated loopback launcher creates a fresh temporary world, labels it **Isolated auth demo**, proxies only to its own Expanse instance and deletes its temporary data on graceful shutdown. It accepts no data-directory argument. No live-world files are opened. `node deploy/auth-demo/server.mjs` remains the smaller API demo; only that smaller demo accepts a dedicated disposable directory for demonstrating persistence across manual restart. Automated HUD tests restart their disposable backend while retaining its own temporary world/profile directory.
+
+The bearer stays inside the controller in memory. The HUD redacts it before copying a private session into React state; credentials are not sent with anonymous frames and cannot enter inspector downloads. Unconfirmed old-world revocations stay in memory and are retried on focus/online/timer or **Retry server sign-out**. Keep that tab open to retry. Closing a tab while offline cannot guarantee server revocation; fixed expiry/restart remains the fallback. Reload always needs a new sign-in. Disconnect is local to the page and does not revoke the extension's site permission; use wallet settings for that.
+
+The acceptance script is `tests/browser/expanse-hud-auth.mjs`. It serves the actual `dist/` under `/preview/`, exercises actual Expanse HTTP verification/logout with a fresh disposable signer and simulates injected providers. Actual MetaMask, Rabby, other extensions, hardware wallets and physical phones have **not** been exercised. This integration follows the brief's injected-wallet/mobile-browser scope; Coinbase Smart Wallet and other ERC-1271 accounts cannot authenticate with the current EOA-only verifier, so no nonworking Smart Wallet connection row is offered. No WalletConnect relay or project ID is required.
 
 ## Rollback
 

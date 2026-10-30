@@ -3,6 +3,7 @@ import { Icon } from "../icons";
 import { Modal } from "../Modal";
 import { Portrait } from "./art";
 import { CreatureInspector } from "./Inspector";
+import { VisitorWallet } from "./VisitorWallet";
 import { BIOME_NAMES, MiniMap, WorldMap } from "./Map";
 import { clampCamera, viewportQuery } from "./projection";
 import { ExpanseClient, validateServer } from "./transport";
@@ -11,6 +12,7 @@ import demoManifest from "./demoManifest.json";
 import recordedData from "./recording.json";
 import "./expanse.css";
 import "./living.css";
+import "./visitor-wallet.css";
 const RECORDING = recordedData as unknown as WorldFrame;
 const STORAGE = "stratoks-expanse-server-v1";
 const VIEW_STORAGE = "stratoks-expanse-view-v2";
@@ -51,7 +53,7 @@ export default function ExpanseApp() {
   const [side, setSide] = useState<
     "residents" | "inspector" | "records" | "places" | null
   >(null);
-  const [modal, setModal] = useState<"settings" | "help" | null>(null),
+  const [modal, setModal] = useState<"settings" | "help" | "wallet" | null>(null),
     [search, setSearch] = useState(""),
     [error, setError] = useState("");
   const [status, setStatus] = useState<
@@ -61,6 +63,7 @@ export default function ExpanseApp() {
     [retry, setRetry] = useState(0),
     [lastRead, setLastRead] = useState<number | null>(null);
   const [serverUrl, setServerUrl] = useState(PUBLIC_SERVER);
+  const [isolatedAuthDemo, setIsolatedAuthDemo] = useState(false);
   const [placeBiome,setPlaceBiome]=useState("all");
   const client = useRef<ExpanseClient | null>(null);
   const viewportWidth = useRef(innerWidth);
@@ -83,9 +86,10 @@ export default function ExpanseApp() {
       .then((r) => (r.ok ? r.json() : null))
       .then((c) => {
         if (closed) return;
-        if (c?.httpUrl) {
+        setIsolatedAuthDemo(c?.isolatedAuthDemo === true);
+        if (typeof c?.httpUrl === "string") {
           try {
-            const url = validateServer(c.httpUrl);
+            const url = validateServer(c.httpUrl || location.origin);
             setServerUrl(url);
             const q = new URLSearchParams(location.search);
             let preferred = false;
@@ -94,6 +98,7 @@ export default function ExpanseApp() {
             } catch {}
             if (
               (c.startMode === "live" || !c.startMode) &&
+              new URL(url).origin === location.origin &&
               source.kind !== "server" &&
               !preferred &&
               q.get("demo") !== "1" &&
@@ -278,6 +283,7 @@ export default function ExpanseApp() {
   );
   const detail = display.inspector?.id === selected ? display.inspector : null;
   const selectedResident = display.residents.find((r) => r.id === selected);
+  const authDemo = isolatedAuthDemo && source.kind === "server" && source.url === serverUrl;
   const connection =
     status === "connecting" && source.kind !== "recording"
       ? source.kind === "demo"
@@ -291,7 +297,9 @@ export default function ExpanseApp() {
             : "Isolated demo"
           : status === "stale"
             ? "Connection interrupted"
-            : "Live world";
+            : authDemo
+              ? "Isolated auth demo"
+              : "Live world";
   const toggle = (s: typeof side) => setSide(side === s ? null : s);
   return (
     <div
@@ -300,6 +308,7 @@ export default function ExpanseApp() {
       data-display={recorded ? "recording" : source.kind}
       data-connection={status}
       data-tick={display.tick}
+      data-auth-demo={authDemo}
     >
       <a className="skip-link" href="#exp-world">
         Skip to world
@@ -324,6 +333,13 @@ export default function ExpanseApp() {
           <span>{connection}</span>
         </div>
         <div className="exp-header-actions">
+          <VisitorWallet
+            backendUrl={source.kind === "server" ? source.url : null}
+            worldId={source.kind === "server" ? frame?.worldId ?? null : null}
+            open={modal === "wallet"}
+            onOpen={() => setModal("wallet")}
+            onClose={() => setModal(null)}
+          />
           <button
             className="exp-icon"
             aria-label="How this world works"
@@ -332,7 +348,7 @@ export default function ExpanseApp() {
             <Icon name="help" />
           </button>
           <button
-            className="exp-icon"
+            className="exp-icon exp-duplicate-settings"
             aria-label="Choose world and connection"
             onClick={() => setModal("settings")}
           >
@@ -535,7 +551,7 @@ export default function ExpanseApp() {
               <>
                 <Icon name="signal" size={17} />
                 <span>
-                  {display.worldId ?? "Shared world"} ·{" "}
+                  {authDemo ? "Isolated auth demo" : display.worldId ?? "Shared world"} ·{" "}
                   {BIOME_NAMES[display.view.biome] ?? display.view.biome}
                 </span>
               </>
@@ -818,7 +834,7 @@ export default function ExpanseApp() {
               ? "Recorded"
               : source.kind === "demo"
                 ? "Private demo"
-                : "Shared world"}
+                : authDemo ? "Isolated auth demo" : "Shared world"}
           </span>
         </span>
       </footer>

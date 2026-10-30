@@ -1,0 +1,112 @@
+TAP version 13
+# Subtest: primitive intentions cannot make a false work/rest/fishing pose
+ok 1 - primitive intentions cannot make a false work/rest/fishing pose
+  ---
+  duration_ms: 0.923853
+  type: 'test'
+  ...
+# Subtest: fishing casts only with actual phase and obtainable line; no catch frame is invented
+ok 2 - fishing casts only with actual phase and obtainable line; no catch frame is invented
+  ---
+  duration_ms: 0.52019
+  type: 'test'
+  ...
+# Subtest: loads and construction follow confirmed inventory/materials instead of destination plans
+ok 3 - loads and construction follow confirmed inventory/materials instead of destination plans
+  ---
+  duration_ms: 0.291897
+  type: 'test'
+  ...
+# Subtest: defect 4: repair phase requires work tool and repair material, never food alone
+ok 4 - defect 4: repair phase requires work tool and repair material, never food alone
+  ---
+  duration_ms: 0.237372
+  type: 'test'
+  ...
+# Subtest: new activity art needs actual work, local object, input and heat/water
+ok 5 - new activity art needs actual work, local object, input and heat/water
+  ---
+  duration_ms: 0.401266
+  type: 'test'
+  ...
+# Subtest: isometric basis points preserve existing coordinates, including negative chunk boundaries
+ok 6 - isometric basis points preserve existing coordinates, including negative chunk boundaries
+  ---
+  duration_ms: 16.039054
+  type: 'test'
+  ...
+# Subtest: all visible in-world screen samples are covered by the bounded API query at every zoom and aspect
+ok 7 - all visible in-world screen samples are covered by the bounded API query at every zoom and aspect
+  ---
+  duration_ms: 4.50597
+  type: 'test'
+  ...
+# Subtest: zoom keeps the pointer world coordinate stable, while minimap uses the same world bounds
+ok 8 - zoom keeps the pointer world coordinate stable, while minimap uses the same world bounds
+  ---
+  duration_ms: 0.381603
+  type: 'test'
+  ...
+# Subtest: defect 2: every corner tile can be centred at all supported zooms and aspects
+ok 9 - defect 2: every corner tile can be centred at all supported zooms and aspects
+  ---
+  duration_ms: 0.473915
+  type: 'test'
+  ...
+# Subtest: defect 3: connected cliffs expose only drops; water banks and snow use real terrain kinds
+ok 10 - defect 3: connected cliffs expose only drops; water banks and snow use real terrain kinds
+  ---
+  duration_ms: 3.188812
+  type: 'test'
+  ...
+# Subtest: terrain picking and query cover all four corners, negative chunks, raised ground, zoom and aspect
+ok 11 - terrain picking and query cover all four corners, negative chunks, raised ground, zoom and aspect
+  ---
+  duration_ms: 115.497465
+  type: 'test'
+  ...
+# Subtest: off-world and unknown terrain cannot be picked or invented by relief
+ok 12 - off-world and unknown terrain cannot be picked or invented by relief
+  ---
+  duration_ms: 0.258814
+  type: 'test'
+  ...
+# Subtest: bounded viewport cache reuses unchanged ticks and invalidates camera, terrain and world identity
+ok 13 - bounded viewport cache reuses unchanged ticks and invalidates camera, terrain and world identity
+  ---
+  duration_ms: 20.872912
+  type: 'test'
+  ...
+# Subtest: worn paint uses reported shelters and adjacent travel without crossing blocked land or water
+ok 14 - worn paint uses reported shelters and adjacent travel without crossing blocked land or water
+  ---
+  duration_ms: 2.105464
+  type: 'test'
+  ...
+# Subtest: configuration permits HTTPS subpaths and refuses credentials or mixed content
+ok 15 - configuration permits HTTPS subpaths and refuses credentials or mixed content
+  ---
+  duration_ms: 1.215997
+  type: 'test'
+  ...
+# Subtest: wire query preserves negative world coordinates and selected creature
+ok 16 - wire query preserves negative world coordinates and selected creature
+  ---
+  duration_ms: 0.300392
+  type: 'test'
+  ...
+# Subtest: incompatible and incoherent frames are not presented as shared state
+ok 17 - incompatible and incoherent frames are not presented as shared state
+  ---
+  duration_ms: 0.263897
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 328.557569

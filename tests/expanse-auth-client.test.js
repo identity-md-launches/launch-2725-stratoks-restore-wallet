@@ -100,6 +100,14 @@ test('declined signature, locked wallet and provider timeout leave buttons recov
   await client.connect(wallet); assert.equal(client.state, 'connected');
 });
 
+test('signature reading timeout is independently bounded and cancelled without shortening backend requests', async (t) => {
+  const { client, wallet, svc } = await app(t, { signatureTimeoutMs: 60 });
+  wallet.sign = () => new Promise(() => {});
+  await client.signIn(); assert.equal(client.busy, false); assert.match(client.error, /timed out/);
+  assert.equal(client.timeoutMs, 500); assert.equal(svc.auth.nonces.size, 0); assert.equal(svc.auth.sessions.size, 0);
+  wallet.sign = null; await client.signIn(); assert.equal(client.state, 'verified');
+});
+
 test('backend timeout/offline logout, unavailable capability and retry', async (t) => {
   const { client, wallet, svc } = await app(t); await client.signIn(); const token = client.session.token;
   const realFetch = client.fetch; client.timeoutMs = 40;
@@ -151,6 +159,92 @@ test('late nonce after disconnect is cancelled; connection timeout/rejection can
   await client.connect({ request: () => new Promise(() => {}) }); assert.equal(client.busy, false); assert.match(client.error, /timed out/);
   await client.connect({ request: async () => { throw Object.assign(new Error('declined'), { code: 4001 }); } }); assert.equal(client.busy, false); assert.match(client.error, /Connection declined/);
   client.timeoutMs = 500; await client.connect(wallet); await client.signIn(); assert.equal(client.state, 'verified');
+});
+
+test('initial wallet announcements during connect are accepted without creating authentication', async (t) => {
+  const { client, wallet } = await app(t);
+  const request = wallet.request.bind(wallet);
+  wallet.request = async (args) => {
+    if (args.method === 'eth_requestAccounts') {
+      wallet.emit('accountsChanged', [wallet.address]);
+      wallet.emit('chainChanged', wallet.chain);
+    }
+    return request(args);
+  };
+  await client.connect(wallet);
+  assert.equal(client.state, 'connected'); assert.equal(client.chainId, 1);
+  assert.equal(client.session, null); assert.equal(client.busy, false);
+  await client.signIn(); assert.equal(client.state, 'verified');
+});
+
+test('isolated preview can connect a wallet but cannot request a challenge or fake authentication', async () => {
+  const wallet = new SimulatedWallet(); let requests = 0;
+  const client = new VisitorAuthClient({ baseUrl: null, uri: null, origin, fetchImpl: async () => { requests++; throw new Error('unexpected network'); } });
+  await client.connect(wallet); assert.equal(client.state, 'connected'); assert.equal(client.session, null);
+  await client.signIn(); assert.equal(client.session, null); assert.equal(client.state, 'unavailable');
+  assert.match(client.error, /no authentication backend/); assert.equal(requests, 0);
+  assert.ok(!wallet.methods.includes('personal_sign'));
+  await client.logout(); assert.equal(client.error, 'No active visitor session in this tab.'); assert.equal(requests, 0);
+  client.destroy();
+});
+
+test('silent account switch while verify is in flight rejects and revokes its returned session', async (t) => {
+  const { client, wallet, svc } = await app(t);
+  const native = client.fetch, entered = deferred(), gate = deferred();
+  client.fetch = async (...args) => {
+    const response = await native(...args);
+    if (args[0].endsWith('/verify')) { entered.resolve(); await gate.promise; }
+    return response;
+  };
+  const attempt = client.signIn(); await entered.promise;
+  assert.equal(svc.auth.sessions.size, 1);
+  wallet.address = addressFromPrivateKey(randomBytes(32).toString('hex')); // intentionally no event
+  gate.resolve(); await attempt;
+  assert.equal(client.session, null); assert.equal(svc.auth.sessions.size, 0);
+  assert.match(client.error, /account or network changed/);
+});
+
+test('capability world changes and malformed current-session replies end verification', async (t) => {
+  const { client, svc } = await app(t); await client.signIn(); const old = client.session.token;
+  svc.auth.world += ':replacement';
+  await client.loadConfig(); await client.retryRevocations();
+  assert.equal(client.session, null); assert.match(client.error, /world service changed/);
+  assert.throws(() => svc.auth.session(old, origin));
+  await client.signIn(); assert.equal(client.state, 'verified');
+  const native = client.fetch;
+  client.fetch = async (...args) => {
+    const response = await native(...args);
+    if (!args[0].endsWith('/session')) return response;
+    const body = await response.json(); body.chainId = 8453;
+    return new Response(JSON.stringify(body));
+  };
+  await client.refreshSession(); await client.retryRevocations();
+  assert.equal(client.state, 'expired'); assert.equal(client.session, null);
+});
+
+test('late logout acknowledgement cannot overwrite a newer verified account state', async (t) => {
+  const { client, wallet } = await app(t); await client.signIn();
+  const native = client.fetch, entered = deferred(), gate = deferred();
+  let hold = true;
+  client.fetch = async (...args) => {
+    const response = await native(...args);
+    if (hold && args[0].endsWith('/logout')) { entered.resolve(); await gate.promise; }
+    return response;
+  };
+  const logout = client.logout(); await entered.promise;
+  wallet.emit('accountsChanged', [wallet.address]);
+  hold = false; await client.signIn(); assert.equal(client.state, 'verified');
+  gate.resolve(); await logout;
+  assert.equal(client.state, 'verified'); assert.ok(client.session);
+});
+
+test('expiry timer clears verification and revokes server credential without changing the world', async (t) => {
+  const { client, svc } = await app(t); svc.auth.cfg.sessionTtlMs = 80;
+  const before = svc.world.toState();
+  await client.signIn(); assert.equal(client.state, 'verified');
+  await delay(100); await client.retryRevocations();
+  assert.equal(client.state, 'expired'); assert.equal(client.session, null);
+  assert.equal(svc.auth.sessions.size, 0); assert.deepEqual(svc.world.toState(), before);
 });
 
 test('delivered static preview modules match the authoritative shared client bytes', () => {
