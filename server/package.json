@@ -2,7 +2,7 @@
   "name": "stratoks-server",
   "version": "0.2.0",
   "private": true,
-  "description": "Authoritative persistent Stratoks world with optional reduced mushroom-body-inspired circuit. Zero runtime dependencies.",
+  "description": "Authoritative persistent Stratoks world and Expanse visitor authentication. Zero runtime dependencies.",
   "type": "module",
   "engines": {
     "node": ">=22"
@@ -16,6 +16,9 @@
     "test:brain": "node --test --test-concurrency=2 ../tests/mushroom.test.js ../tests/brain-compatibility.test.js ../tests/inspector.test.js",
     "experiment:brain": "node ../tests/experiments/mushroom-learning.mjs 10",
     "experiment:ecology": "node ../tests/experiments/mushroom-ecology.mjs 5000 10",
-    "demo:brain": "node bin/phase2a-demo.js"
+    "demo:brain": "node bin/phase2a-demo.js",
+    "start:expanse": "node src/expanse/server.js",
+    "test:expanse-auth": "node --test ../tests/expanse-auth.test.js ../tests/expanse-auth-client.test.js",
+    "demo:auth": "node ../deploy/auth-demo/server.mjs"
   }
 }

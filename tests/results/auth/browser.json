@@ -1,0 +1,47 @@
+{
+  "browser": "Chromium headless",
+  "wallets": "simulated EIP-1193/EIP-6963 providers, disposable signer; NOT actual extensions/devices",
+  "tests": [
+    {
+      "name": "multiple EIP-6963 wallets require visitor choice; anonymous world is visible",
+      "passed": true,
+      "ms": 234
+    },
+    {
+      "name": "real server verification and private profile; screenshot",
+      "passed": true,
+      "ms": 287
+    },
+    {
+      "name": "server-verified logout and rejected signature retry",
+      "passed": true,
+      "ms": 392
+    },
+    {
+      "name": "network change clears verified UI and revokes old credential",
+      "passed": true,
+      "ms": 172
+    },
+    {
+      "name": "account switch while signature is pending never authenticates late response",
+      "passed": true,
+      "ms": 269
+    },
+    {
+      "name": "mobile without injected wallet explains requirements; screenshot; walletless ticks continue",
+      "passed": true,
+      "ms": 426
+    },
+    {
+      "name": "simulated injected mobile provider can verify and logout",
+      "passed": true,
+      "ms": 453
+    },
+    {
+      "name": "static preview never contacts a world or offers sign-in without an installed backend",
+      "passed": true,
+      "ms": 334
+    }
+  ],
+  "pageErrors": []
+}

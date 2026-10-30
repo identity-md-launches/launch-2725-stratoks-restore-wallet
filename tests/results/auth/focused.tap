@@ -1,0 +1,28 @@
+✔ client uses actual HTTP crypto verification and server logout; connecting alone never authenticates (662.041945ms)
+✔ account switch mid-signature cannot authenticate old or new account; retry recovers (352.939014ms)
+✔ network changes and provider disconnect immediately clear/revoke an existing session (390.126633ms)
+✔ chain switch mid-signature and silent account changes both reject; no transaction RPC (170.848591ms)
+✔ late verification response after account switch is cancelled on server (174.196103ms)
+✔ declined signature, locked wallet and provider timeout leave buttons recoverable (324.876427ms)
+✔ backend timeout/offline logout, unavailable capability and retry (341.997477ms)
+✔ exact challenge validation rejects altered server fields before prompting wallet (49.785025ms)
+✔ missing wallets, EIP-6963 discovery, multiple provider choice, fallback and cleanup (59.354887ms)
+✔ late nonce after disconnect is cancelled; connection timeout/rejection can be retried (258.279116ms)
+✔ delivered static preview modules match the authoritative shared client bytes (0.675568ms)
+✔ real HTTP challenge/signature/login/session/logout; private profile survives restart, world unchanged (653.750976ms)
+✔ HTTP rejects wrong signer/address/chain/message/origin, replay and expiry (858.533898ms)
+✔ cancel pending or completed challenge safely revokes late authentication (233.473288ms)
+✔ malformed input, bounded bodies, exact CORS and method isolation (79.920245ms)
+✔ bounded nonce/session/profile stores and expiry garbage collection (644.452289ms)
+✔ per-peer/global rates and bounded rate-key map reject without affecting world (26.091058ms)
+✔ body deadline returns 408; profile write failure and corrupt restart keep anonymous viewing alive (211.954486ms)
+✔ invalid configuration cannot enable authentication (1.074702ms)
+✔ auth on a copied schema-4 populated world preserves identity through migration and restart (701.091836ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3686.359194

@@ -1,0 +1,41 @@
+{
+  "runtimeDependencies": "none; no new packages installed",
+  "fullBackend": {
+    "exitCode": 0,
+    "passed": 224
+  },
+  "finalFocusedAuth": {
+    "exitCode": 0,
+    "passed": 20
+  },
+  "existingClientTests": {
+    "exitCode": 0,
+    "passed": 34,
+    "runner": "scratch TypeScript 5.9.3 transpile loader with extensionless TS and JSON module support, not canonical tsx install"
+  },
+  "existingClientTypecheck": {
+    "exitCode": 0,
+    "typescript": "5.9.3",
+    "diagnostics": 0
+  },
+  "existingClientBuild": {
+    "exitCode": 0,
+    "vite": "8.3.5",
+    "warnings": [
+      "existing unresolved Manrope font URL in available tooling",
+      "existing node:fs browser externalization"
+    ]
+  },
+  "browser": {
+    "exitCode": 0,
+    "scenarios": 8,
+    "actualExtensionDeviceTests": false,
+    "tooling": "Playwright 1.64.1, Chromium headless; simulated EIP-1193 providers with disposable signer"
+  },
+  "dockerArm": {
+    "run": false,
+    "reason": "Docker runtime unavailable"
+  },
+  "productionChanges": false,
+  "currentHudIntegration": "not performed: web/ outside assigned editable scope"
+}

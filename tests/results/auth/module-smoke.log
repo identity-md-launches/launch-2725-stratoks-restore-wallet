@@ -1,0 +1,1 @@
+Docker COPY server/shared closure: all terrain, visitor auth, and actual service imports passed under Node. This is not an image or ARM execution result.
